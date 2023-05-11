@@ -1,10 +1,16 @@
 @use 'components/App/App';
+@use 'components/Main/Main';
 @use 'components/Main/components/BlockHeader/BlockHeader';
 @use 'components/Main/components/Promo/Promo';
 @use 'components/Main/components/AboutProject/AboutProject';
 @use 'components/Main/components/Techs/Techs';
 @use 'components/Main/components/LittleBlock/LittleBlock';
 @use 'components/Main/components/AboutMe/AboutMe';
+@use 'components/Main/components/BigLink/BigLink';
+
+// LAYOUT
+@use 'components/Main/layout/components/Header/Header';
+@use 'components/Main/layout/components/Footer/Footer';
 
 @use 'scss' as *;
 

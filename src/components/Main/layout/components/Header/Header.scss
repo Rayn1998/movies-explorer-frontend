@@ -1,0 +1,18 @@
+@use '../../../../../scss/variables' as *;
+
+.header {
+  padding: 1.8rem 7rem;
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0 auto;
+  background-color: transparent;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%);
+  overflow: hidden;
+
+  @media screen and (min-width: 1434px) {
+    padding: 1.8rem 0;
+    max-width: 128rem;
+  }
+}

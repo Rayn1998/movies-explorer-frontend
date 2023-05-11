@@ -3,4 +3,77 @@
 .about-me {
   @include pagePadding;
   background-color: $black;
+  max-height: 107.9rem;
+  
+  .about-me__container {
+    @include centerContainer;
+
+    // DESCRIPTION
+    .about-me__description {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 6.6rem;
+
+      .about-me__description-text-container {
+        max-width: 60rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1.8rem;
+
+        .about-me__description-name {
+          @include text;
+          font-size: 5rem;
+          line-height: 5.8rem;
+          letter-spacing: -0.04em;
+        }
+
+        .about-me__description-position {
+          @include text;
+          font-weight: 500;
+          font-size: 1.8rem;
+          line-height: 2rem;
+        }
+
+        .about-me__description-bio {
+          margin-top: 0.8rem;
+          font-size: 1.4rem;
+          line-height: 2.2rem;
+        }
+
+        .about-me__description-github {
+          margin-top: 8.1rem;
+          @include text;
+          font-weight: 500;
+          font-size: 1.4rem;
+          line-height: 1.7rem;
+        }
+      }
+
+      .about-me__photo {
+        height: 27rem;
+        width: auto;
+      }
+    }
+
+    // PORTFOLIO
+    .about-me__portfolio {
+      margin-top: 10.1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 5rem;
+
+      .about-me__portfolio-header {
+        @include text;
+        font-size: 1.8rem;
+        line-height: 2rem;
+        color: $grey-text;
+      }
+
+      .about-me__portfolio-links {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+      }
+    }
+  }
 }

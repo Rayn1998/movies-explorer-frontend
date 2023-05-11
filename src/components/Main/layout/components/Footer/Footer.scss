@@ -1,0 +1,51 @@
+@use '../../../../../scss/variables' as *;
+
+.footer {
+  height: 17.2rem;
+  background-color: $black;
+
+  .footer__container {
+    padding: 7.9rem 7rem 2rem;
+    @include flexColCen;
+    @include centerContainer;
+    gap: 2rem;
+
+    .footer__text {
+      @include text;
+      font-size: 1.3rem;
+      line-height: 1.6rem;
+      color: $grey-text;
+    }
+
+    .footer__divider {
+      height: 0.1rem;
+      width: 100%;
+      background-color: $grey-border;
+    }
+
+    .footer__bottom {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+
+      .footer__year {
+        @include text;
+        font-size: 1.3rem;
+        line-height: 1.6rem;
+        color: $white;
+      }
+
+      .footer__bottom-right {
+        display: flex;
+        gap: 2rem;
+
+        p {
+          @include text;
+          font-size: 1.3rem;
+          line-height: 1.6rem;
+          color: $white;
+        }
+      }
+    }
+  }
+}

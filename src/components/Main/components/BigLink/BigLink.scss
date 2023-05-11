@@ -1,0 +1,26 @@
+@use '../../../../scss' as *;
+
+.big-link {
+  display: flex;
+  justify-content: space-between;
+
+  .big-link__text {
+    @include text;
+    font-size: 3rem;
+    line-height: 5rem;
+    letter-spacing: -0.04em;
+  }
+
+  .big-link__arrow {
+    @include text;
+    font-size: 3rem;
+    line-height: 6rem;
+    letter-spacing: -0.04em;
+  }
+}
+
+.big-link__border {
+  height: 0.1rem;
+  width: 100%;
+  background-color: $grey-border;
+}

@@ -3,13 +3,12 @@
 .promo {
   width: 100%;
   min-height: 64.8rem;
-
   background-color: $promo-bg;
   padding: 14.9rem 7rem 0;
   box-sizing: border-box;
 
   .promo-container {
-    width: 100%;
+    @include centerContainer;
     height: 100%;
     display: flex;
     justify-content: space-between;
