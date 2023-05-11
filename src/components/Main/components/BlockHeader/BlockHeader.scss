@@ -1,0 +1,19 @@
+@use '../../../../scss' as *;
+
+.block-header__header-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 2.3rem;
+
+  .block-header__header {
+    @include text;
+    font-size: 2.2rem;
+    line-height: 2.7rem;
+    letter-spacing: -0.04em;
+  }
+
+  .block-header__divider {
+    height: 0.1rem;
+    background-color: $grey;
+  }
+}

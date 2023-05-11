@@ -1,0 +1,6 @@
+@use '../../../../scss' as *;
+
+.about-me {
+  @include pagePadding;
+  background-color: $black;
+}

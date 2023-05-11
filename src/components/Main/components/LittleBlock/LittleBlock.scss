@@ -1,0 +1,15 @@
+@use '../../../../scss' as *;
+
+.little-block {
+  @include flexColCen;
+  width: 9rem;
+  height: 6rem;
+  background-color: $light-grey;
+  border-radius: 1rem;
+
+  .little-block__text {
+    @include text;
+    font-size: 1.4rem;
+    line-height: 1.7rem;
+  }
+}
