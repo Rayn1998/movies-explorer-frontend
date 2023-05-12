@@ -12,7 +12,7 @@ const Promo = () => {
           <p className="promo__text">
             Листайте ниже, чтобы узнать больше про этот проект и его создателя.
           </p>
-          <input className="promo__more-btn" value="Узнать больше" />
+          <input type='button' className="promo__more-btn" value="Узнать больше" />
         </div>
         <img className="promo__image" alt="Logo" src={Logo} />
       </div>

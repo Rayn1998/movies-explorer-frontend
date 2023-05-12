@@ -8,9 +8,30 @@
 @use 'components/Main/components/AboutMe/AboutMe';
 @use 'components/Main/components/BigLink/BigLink';
 
+// MOVIES
+@use 'components/Movies/Movies';
+@use 'components/Movies/components/Search/Search';
+@use 'components/Movies/components/MovieCard/MovieCard';
+@use 'components/Movies/components/MovieCard/components/MovieButton/MovieButton';
+@use 'components/SavedMovies/SavedMovies';
+
 // LAYOUT
-@use 'components/Main/layout/components/Header/Header';
-@use 'components/Main/layout/components/Footer/Footer';
+@use 'components/Layout/components/Header/Header';
+@use 'components/Layout/components/Footer/Footer';
+@use 'components/Movies/components/Search/components/SearchSlider/SearchSlider';
+
+// PROFILE
+@use 'components/Profile/Profile';
+@use 'components/Profile/components/Field/Field';
+
+// PAGE NOT FOUND
+@use 'components/PageNotFound/PageNotFound';
+
+// AUTHENTICATION
+@use 'components/Auth/components/AuthBase/AuthBase';
+@use 'components/Auth/components/AuthField/AuthField';
+@use 'components/Auth/components/AuthHeader/AuthHeader';
+
 
 @use 'scss' as *;
 

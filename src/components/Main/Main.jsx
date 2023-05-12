@@ -2,7 +2,7 @@ import Promo from 'components/Main/components/Promo/Promo';
 import AboutMe from './components/AboutMe/AboutMe';
 import AboutProject from './components/AboutProject/AboutProject';
 import Techs from './components/Techs/Techs';
-import Layout from './layout/Layout';
+import Layout from 'components/Layout/Layout';
 
 const Main = () => {
   return (

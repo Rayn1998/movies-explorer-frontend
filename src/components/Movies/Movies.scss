@@ -1,0 +1,29 @@
+@use '../../scss/variables' as *;
+
+.movies {
+  @include centerContainer;
+  background-color: $black;
+  max-height: fit-content;
+
+  .movies__container {
+    @include movieContainer;
+  }
+
+  .movies__add-more {
+    height: 16.6rem;
+    padding: 5rem 48rem 8rem;
+
+    .movies__add-btn {
+      @include flexColCen;
+      @include text;
+      width: 32rem;
+      height: 3.6rem;
+      background-color: $btn-bg;
+      border-radius: 0.6rem;
+      border: none;
+      cursor: pointer;
+      font-size: 1.2rem;
+      line-height: 1.5rem;
+    }
+  }
+}

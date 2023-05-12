@@ -1,0 +1,16 @@
+@use '../../../../scss/variables' as *;
+
+.auth-header {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+  align-items: flex-start;
+
+  .auth-header__title {
+    @include text;
+    font-size: 2.4rem;
+    line-height: 2.9rem;
+    font-weight: 500;
+    color: $white;
+  }
+}

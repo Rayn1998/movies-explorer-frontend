@@ -1,0 +1,51 @@
+@use '../../../../scss/variables' as *;
+
+.auth {
+  margin: 0 auto;
+  padding: 7rem 0;
+  max-width: 39.6rem;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+
+  .auth__form {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .auth__submit {
+    width: 100%;
+    height: 4.5rem;
+    background-color: $blue;
+    @include text;
+    font-size: 1.4rem;
+    line-height: 1.7rem;
+    border: none;
+    border-radius: 0.3rem;
+    color: $white;
+    cursor: pointer;
+  }
+
+  .auth__footer-block {
+    display: flex;
+    justify-content: center;
+    gap: 0.6rem;
+
+    .auth__footer-question {
+      @include text;
+      font-size: 1.4rem;
+      line-height: 1.7rem;
+      color: $grey-text;
+    }
+
+    .auth__footer-btn {
+      @include text;
+      font-size: 1.4rem;
+      line-height: 1.7rem;
+      color: $blue;
+      cursor: pointer;
+    }
+  }
+}

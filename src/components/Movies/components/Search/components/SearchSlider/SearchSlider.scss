@@ -1,0 +1,20 @@
+@use '../../../../../../scss/variables' as *;
+
+.search-slider {
+  width: 3.6rem;
+  height: 2rem;
+  border-radius: 2rem;
+  background-color: $green;
+  position: relative;
+  cursor: pointer;
+
+  .search-slider-circle {
+    width: 1.6rem;
+    height: 1.6rem;
+    border-radius: 50%;
+    background-color: $white;
+    position: absolute;
+    top: 0.2rem;
+    right: 0.2rem;
+  }
+}
