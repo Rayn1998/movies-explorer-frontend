@@ -6,33 +6,70 @@
   background-color: $black;
   box-sizing: border-box;
 
+  @media screen and (max-width: 768px) {
+    padding: 9rem 5rem;
+  }
+
+  @media screen and (max-width: 768px) {
+    padding: 7rem 1.8rem;
+  }
+
   .about-project__container {
     @include centerContainer;
     display: flex;
     flex-direction: column;
     gap: 7rem;
 
+    @media screen and (max-width: 320px) {
+      gap: 6rem;
+    }
+
     // STEPS
     .about-project__steps-wrapper {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
+
+      @media screen and (max-width: 320px) {
+        display: flex;
+        flex-direction: column;
+        gap: 5.6rem;
+      }
 
       .about-project__step {
         display: flex;
         flex-direction: column;
         gap: 2.6rem;
 
+        @media screen and (max-width: 320px) {
+          gap: 1.6rem;
+        }
+
         .about-project__step-header {
           @include text;
           font-size: 2rem;
           line-height: 2.4rem;
           letter-spacing: -0.04em;
+
+          @media screen and (max-width: 320px) {
+            font-size: 1.8rem;
+            line-height: 2.2rem;
+          }
         }
 
         .about-project__step-text {
           @include text;
           font-size: 1.4rem;
           line-height: 2rem;
+
+          @media screen and (max-width: 768px) {
+            font-size: 1.2rem;
+            line-height: 1.8rem;
+          }
+
+          @media screen and (max-width: 768px) {
+            font-size: 1.1rem;
+            line-height: 1.6rem;
+          }
         }
       }
     }
@@ -48,6 +85,10 @@
           background-color: $light-grey;
           min-height: 3.6rem;
 
+          @media screen and (max-width: 320px) {
+            grid-template-columns: 1fr 2fr;
+          }
+
           .about-project__progress-step-header {
             @include text;
             @include flexColCen;
@@ -55,6 +96,11 @@
             height: 100%;
             font-size: 1.4rem;
             line-height: 1.7rem;
+
+            @media screen and (max-width: 320px) {
+              font-size: 1.1rem;
+              line-height: 1.3rem;
+            }
           }
 
           .green {
@@ -70,10 +116,19 @@
           justify-items: center;
           margin-top: 1.4rem;
 
+          @media screen and (max-width: 320px) {
+            grid-template-columns: 1fr 2fr;
+          }
+
           .about-project__progress-step-footer {
             font-size: 1.4rem;
             line-height: 1.7rem;
             color: $grey-text;
+
+            @media screen and (max-width: 320px) {
+              font-size: 1.1rem;
+              line-height: 1.3rem;
+            }
           }
         }
       }

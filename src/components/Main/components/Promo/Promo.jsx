@@ -6,8 +6,7 @@ const Promo = () => {
       <div className="promo-container">
         <div className="promo__info">
           <h1 className="promo__header">
-            Учебный проект студента факультета <br />
-            Веб-разработки.
+            Учебный проект студента факультета Веб-разработки.
           </h1>
           <p className="promo__text">
             Листайте ниже, чтобы узнать больше про этот проект и его создателя.

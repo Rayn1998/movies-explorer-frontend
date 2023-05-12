@@ -4,8 +4,16 @@
   width: 100%;
   min-height: 64.8rem;
   background-color: $promo-bg;
-  padding: 14.9rem 7rem 0;
+  padding: 14.9rem 7rem 7.5rem;
   box-sizing: border-box;
+
+  @media screen and (max-width: 768px) {
+    padding: 21.4rem 4.4rem 7.6rem;
+  }
+
+  @media screen and (max-width: 320px) {
+    padding: 14.4rem 1rem 3rem;
+  }
 
   .promo-container {
     @include centerContainer;
@@ -15,16 +23,43 @@
     align-items: flex-start;
     overflow: hidden;
 
+    @media screen and (max-width: 768px) {
+      flex-direction: column;
+      flex-flow: column-reverse;
+      align-items: center;
+      gap: 4.8rem;
+    }
+
     .promo__info {
       display: flex;
       flex-direction: column;
       gap: 3.6rem;
+
+      @media screen and (max-width: 768px) {
+        align-items: center;
+      }
 
       .promo__header {
         @include text;
         font-size: 5rem;
         line-height: 5.8rem;
         max-width: 64rem;
+
+        @media screen and (max-width: 768px) {
+          font-size: 4rem;
+          max-width: 68rem;
+          text-align: center;
+          line-height: 5rem;
+        }
+
+        @media screen and (max-width: 320px) {
+          font-size: 3rem;
+          max-width: 30rem;
+          font-weight: 40rem;
+          text-align: center;
+          line-height: 3.8rem;
+          letter-spacing: -0.04em;
+        }
       }
 
       .promo__text {
@@ -33,6 +68,11 @@
         line-height: 1.6rem;
         max-width: 31rem;
         opacity: 0.5;
+
+        @media screen and (max-width: 768px) {
+          text-align: center;
+          max-width: 26rem;
+        }
       }
 
       .promo__more-btn {
@@ -48,11 +88,24 @@
         box-sizing: border-box;
         border: 0.1rem solid $white-half-opaque;
         border-radius: 0.3rem;
+
+        @media screen and (max-width: 768px) {
+          margin-top: 5.6rem;
+        }
+
+        @media screen and (max-width: 768px) {
+          margin-top: 4.4rem;
+        }
       }
     }
 
     .promo__image {
       max-width: 31rem;
+
+      @media screen and (max-width: 320px) {
+        max-width: 21rem;
+      }
     }
+
   }
 }

@@ -4,6 +4,11 @@
   @include pagePadding;
   background-color: $black;
   max-height: 107.9rem;
+
+  @media screen and (max-width: 768px) {
+    padding: 9rem 5rem;
+    max-height: 99.4rem;
+  }
   
   .about-me__container {
     @include centerContainer;
@@ -13,6 +18,11 @@
       display: flex;
       justify-content: space-between;
       margin-top: 6.6rem;
+      gap: 4.9rem;
+
+      @media screen and (max-width: 320px) {
+        flex-direction: column;
+      }
 
       .about-me__description-text-container {
         max-width: 60rem;
@@ -25,6 +35,11 @@
           font-size: 5rem;
           line-height: 5.8rem;
           letter-spacing: -0.04em;
+
+          @media screen and (max-width: 768px) {
+            font-size: 4rem;
+            line-height: 4rem;
+          }
         }
 
         .about-me__description-position {
@@ -32,12 +47,22 @@
           font-weight: 500;
           font-size: 1.8rem;
           line-height: 2rem;
+
+          @media screen and (max-width: 768px) {
+            font-size: 1.2rem;
+            line-height: 1.8rem;
+          }
         }
 
         .about-me__description-bio {
           margin-top: 0.8rem;
           font-size: 1.4rem;
           line-height: 2.2rem;
+
+          @media screen and (max-width: 768px) {
+            font-size: 1.2rem;
+            line-height: 1.8rem;
+          }
         }
 
         .about-me__description-github {
@@ -50,7 +75,8 @@
       }
 
       .about-me__photo {
-        height: 27rem;
+        // height: 27rem;
+        height: 30.7rem;
         width: auto;
       }
     }
@@ -61,6 +87,10 @@
       display: flex;
       flex-direction: column;
       gap: 5rem;
+
+      @media screen and (max-width: 768px) {
+        margin-top: 9rem;
+      }
 
       .about-me__portfolio-header {
         @include text;
