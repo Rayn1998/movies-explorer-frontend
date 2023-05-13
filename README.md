@@ -1,1 +1,1 @@
-# movies-explorer-frontend
+# movies-explorer-frontend design-link: https://disk.yandex.ru/d/29WB1Lkxhp34Lg
