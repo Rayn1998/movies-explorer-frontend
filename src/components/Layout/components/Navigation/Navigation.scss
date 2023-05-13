@@ -1,0 +1,81 @@
+@use '../../../../scss/variables' as *;
+
+.nav {
+  position: relative;
+  overflow: hidden;
+
+  .small-menu__icon {
+    width: 4.4rem;
+    height: 4.4rem;
+    background-image: url('../../../../assets/images/menu_icon.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    cursor: pointer;
+  }
+
+  .nav-close-icon {
+    width: 2.2rem;
+    height: 2.2rem;
+    background-image: url('../../../../assets/images/menu_close_icon.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    position: absolute;
+    top: 2.24rem;
+    right: 2.24rem;
+    cursor: pointer;
+  }
+
+  .nav-auth {
+    display: flex;
+    gap: 3rem;
+  }
+
+  .nav-movies {
+    display: flex;
+    gap: 5rem;
+
+    .nav-movies__btns {
+      display: flex;
+      gap: 3rem;
+    }
+  }
+
+  .nav-button {
+    @include text;
+    @include buttonText;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+  }
+
+  .nav-signin {
+    @include text;
+    @include buttonText;
+    width: 7.6rem;
+    height: 3.2rem;
+    background-color: $green;
+    color: $black;
+    border: none;
+    border-radius: 0.3rem;
+    cursor: pointer;
+  }
+
+  .nav-account-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.7rem;
+    width: 10rem;
+    height: 3.2rem;
+    border: 0.2rem solid $input-outline-02opaque;
+    border-radius: 5rem;
+    padding: 0.8rem 1.2rem;
+    box-sizing: border-box;
+    cursor: pointer;
+
+    .nav-account {
+      background-color: transparent;
+      border: none;
+    }
+  }
+}

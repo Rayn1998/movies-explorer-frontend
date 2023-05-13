@@ -11,6 +11,7 @@ const Login = () => {
       btnText="Войти" 
       footerQuestion='Ещё не зарегистрированы?'
       footerBtn='Регистрация'
+      footerLink='/register'
     >
       <AuthField 
         title={'E-mail'} 

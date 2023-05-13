@@ -1,7 +1,8 @@
 @use '../../../../scss/variables' as *;
 
 .footer {
-  height: 17.2rem;
+  // margin-top: 8rem;
+  min-height: 17.2rem;
   background-color: $black;
 
   .footer__container {
@@ -10,11 +11,22 @@
     @include centerContainer;
     gap: 2rem;
 
+    @media screen and (max-width: 400px) {
+      padding: 7.9rem 1rem 2rem;
+    }
+    
     .footer__text {
       @include text;
       font-size: 1.3rem;
       line-height: 1.6rem;
       color: $grey-text;
+
+      @media screen and (max-width: 400px) {
+        font-size: 1.2rem;
+        line-height: 1.5rem;
+        text-align: center;
+      }
+      
     }
 
     .footer__divider {
@@ -28,6 +40,13 @@
       display: flex;
       justify-content: space-between;
 
+      @media screen and (max-width: 400px) {
+        flex-direction: column-reverse;
+        align-items: center;
+        gap: 2rem;
+      }
+  
+
       .footer__year {
         @include text;
         font-size: 1.3rem;
@@ -38,6 +57,12 @@
       .footer__bottom-right {
         display: flex;
         gap: 2rem;
+
+        @media screen and (max-width: 400px) {
+          flex-direction: column;
+          align-items: center;
+          gap: 1.2rem;
+        }
 
         p {
           @include text;

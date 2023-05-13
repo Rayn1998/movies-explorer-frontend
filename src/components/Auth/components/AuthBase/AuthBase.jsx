@@ -1,6 +1,11 @@
 import AuthHeader from '../AuthHeader/AuthHeader';
+import { useNavigate } from 'react-router-dom';
 
-const Auth = ({ title, submit, children, btnText, footerQuestion, footerBtn }) => {
+const Auth = ({ title, submit, children, btnText, footerQuestion, footerBtn, footerLink }) => {
+  const navigation = useNavigate();
+  const handleBtnClick = () => {
+    navigation(footerLink);
+  }
   return (
     <div className="auth">
       <AuthHeader title={title} />
@@ -8,7 +13,7 @@ const Auth = ({ title, submit, children, btnText, footerQuestion, footerBtn }) =
       <button className="auth__submit">{btnText}</button>
       <div className="auth__footer-block">
         <p className="auth__footer-question">{footerQuestion}</p>
-        <p className="auth__footer-btn">{footerBtn}</p>
+        <p className="auth__footer-btn" onClick={handleBtnClick} >{footerBtn}</p>
       </div>
     </div>
   );

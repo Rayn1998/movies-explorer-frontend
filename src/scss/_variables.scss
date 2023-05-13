@@ -45,10 +45,27 @@ $blue: #4285F4;
   grid-template-columns: repeat(3, 1fr);
   row-gap: 2.8rem;
   column-gap: 3.2rem;
+
+  @media screen and (max-width: 768px) {
+    padding: 7rem 3rem;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media screen and (max-width: 600px) {
+    padding: 4rem 1rem;
+    grid-template-columns: 1fr;
+    justify-items: center;
+  }
 }
 
 @mixin linkBorder {
   height: 0.1rem;
   width: 100%;
   background-color: $grey-border;
+}
+
+@mixin buttonText {
+  font-weight: 500;
+  font-size: 1.2rem;
+  line-height: 1.6rem;
 }

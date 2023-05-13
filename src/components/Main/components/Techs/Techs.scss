@@ -27,6 +27,11 @@
         font-size: 5rem;
         line-height: 5.8rem;
         letter-spacing: -0.04em;
+
+        @media screen and (max-width: 400px) {
+          font-size: 3rem;
+          line-height: 3.6rem;
+        }
       }
 
       .techs__text {
@@ -41,6 +46,11 @@
           font-size: 1.2rem;
           line-height: 1.8rem;
         }
+
+        @media screen and (max-width: 400px) {
+          font-size: 1.1rem;
+          line-height: 1.6rem;
+        }
       }
 
       .techs__blocks-container {
@@ -48,9 +58,13 @@
         display: flex;
         gap: 1rem;
 
-        @media screen and (max-width: 320px) {
+        @media screen and (max-width: 670px) {
           display: grid;
           grid-template-columns: repeat(2, 1fr);
+        }
+
+        @media screen and (max-width: 400px) {
+          margin-top: 2.4rem;
         }
       }
     }

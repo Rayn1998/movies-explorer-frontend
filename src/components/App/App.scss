@@ -1,7 +1,19 @@
 @use '../../scss/variables' as *;
 
 .app {
+  max-width: 100vw;
   min-height: 100vh;
   height: fit-content;
   background-color: $black;
+  overflow-x: hidden;
+
+  .menu-wrapper {
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    right: 0;
+    // background-color: $black;
+    z-index: 2;
+  }
 }

@@ -1,7 +1,7 @@
 @use '../../../../scss/variables' as *;
 
 .movie-card {
-  width: 36rem;
+  max-width: 36rem;
   height: 31.9rem;
   background-color: $card-bg;
   display: flex;
@@ -15,13 +15,21 @@
     display: flex;
     align-items: center;
     gap: 1.4rem;
+    padding: 0 1.8rem;
+    box-sizing: border-box;
+    width: 100%;
+    justify-content: space-between;
+    // max-width: 24rem;
 
     .movie-card__title {
-      width: 24rem;
       @include text;
       font-size: 1.5rem;
       line-height: 1.8rem;
       color: $white;
+
+      @media screen and (max-width: 600px) {
+        font-size: 1.2rem;
+      }
     }
 
     .movie-card__duration {
@@ -29,6 +37,14 @@
       font-size: 1.3rem;
       line-height: 1.8rem;
       color: $grey-text;
+
+      @media screen and (max-width: 600px) {
+        font-size: 1rem;
+      }
     }
+  }
+
+  .movie-card__image {
+    width: 100%;
   }
 }

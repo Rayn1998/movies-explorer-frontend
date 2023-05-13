@@ -1,6 +1,7 @@
 @use '../../../../scss/variables' as *;
 
 .header {
+  z-index: 2;
   padding: 1.8rem 7rem;
   box-sizing: border-box;
   width: 100%;
@@ -9,7 +10,9 @@
   position: absolute;
   left: 50%;
   transform: translate(-50%);
-  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 
   @media screen and (min-width: 1434px) {
     padding: 1.8rem 0;

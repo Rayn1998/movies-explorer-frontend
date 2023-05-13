@@ -10,8 +10,12 @@
   }
 
   .movies__add-more {
+    display: flex;
+    justify-content: center;
     height: 16.6rem;
-    padding: 5rem 48rem 8rem;
+    padding: 5rem 0 8rem;
+    margin: 0 auto;
+    box-sizing: border-box;
 
     .movies__add-btn {
       @include flexColCen;

@@ -16,6 +16,7 @@ const Register = () => {
       btnText="Зарегистрироваться"
       footerQuestion="Уже зарегистрированы?"
       footerBtn="Войти"
+      footerLink='/login'
     >
       <AuthField
         title={'Имя'}
