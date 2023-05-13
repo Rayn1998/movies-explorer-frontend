@@ -41,6 +41,7 @@
       .nav-movies__btns {
         display: flex;
         flex-direction: column;
+        align-items: center;
         gap: 3rem;
 
         .nav-button {
@@ -49,6 +50,12 @@
           background-color: transparent;
           border: none;
           cursor: pointer;
+          font-size: 1.8rem;
+          line-height: 2.2rem;
+          max-width: fit-content;
+          font-weight: 500;
+          padding-bottom: 0.4rem;
+          box-sizing: border-box;
         }
       }
     }

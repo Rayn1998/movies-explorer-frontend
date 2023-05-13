@@ -26,9 +26,9 @@ const SmallMenu = () => {
     handleCloseClick();
   };
   const menuItems = [
-    { name: 'Главная', handleClick: handleMainClick },
-    { name: 'Фильмы', handleClick: handleMoviesClick },
-    { name: 'Сохранённые фильмы', handleClick: handleSavedMoviesClick },
+    { name: 'Главная', path: '/' },
+    { name: 'Фильмы', path: '/movies' },
+    { name: 'Сохранённые фильмы', path: '/saved' },
   ];
   return (
     <div className="small-menu">
@@ -36,8 +36,6 @@ const SmallMenu = () => {
       <div className="small-menu__wrapper">
         <MainMenu
           props={{
-            handleMoviesClick,
-            handleSavedMoviesClick,
             handleProfileClick,
             menuItems
           }}

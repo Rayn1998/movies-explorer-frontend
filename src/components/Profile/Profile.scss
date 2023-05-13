@@ -3,8 +3,10 @@
 .profile {
   @include flexColCen;
   @include centerContainer;
+  max-width: 41rem;
   min-height: 70rem;
-  padding: 7.4rem 43.5rem;
+  padding: 7.4rem 3rem;
+  margin: 0 auto;
   box-sizing: border-box;
   gap: 12.3rem;
   margin: 0 auto;
