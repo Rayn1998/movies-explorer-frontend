@@ -6,13 +6,13 @@ import Layout from 'components/Layout/Layout';
 
 const Main = () => {
   return (
-    <Layout>
-      <div className="main">
+    <Layout footer>
+      <main className="main">
         <Promo />
         <AboutProject />
         <Techs />
         <AboutMe />
-      </div>
+      </main>
     </Layout>
   );
 };

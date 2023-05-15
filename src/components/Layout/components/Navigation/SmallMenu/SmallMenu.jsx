@@ -26,9 +26,9 @@ const SmallMenu = () => {
     handleCloseClick();
   };
   const menuItems = [
-    { name: 'Главная', path: '/' },
-    { name: 'Фильмы', path: '/movies' },
-    { name: 'Сохранённые фильмы', path: '/saved' },
+    { name: 'Главная', handleClick: handleMainClick, path: '/' },
+    { name: 'Фильмы', handleClick: handleMoviesClick, path: '/movies' },
+    { name: 'Сохранённые фильмы', handleClick: handleSavedMoviesClick, path: '/saved' },
   ];
   return (
     <div className="small-menu">

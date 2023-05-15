@@ -29,6 +29,7 @@ const Navigation = () => {
   const handleMenuClick = () => {
     dispatch(onMenu());
   }
+  // If need to highlight active element - set the path value to object
   const menuItems = [
     { name: 'Фильмы', handleClick: handleMoviesClick },
     { name: 'Сохранённые фильмы', handleClick: handleSavedMoviesClick },
@@ -46,7 +47,7 @@ const Navigation = () => {
 
   return (
     <div className="nav">
-      {changeMenu 
+      {changeMenu && location.pathname !== '/'
         ? <div 
             className='small-menu__icon' 
             onClick={handleMenuClick} 

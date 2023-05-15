@@ -3,9 +3,21 @@ import Vitalik from 'assets/images/vitalik.png';
 import BigLink from '../BigLink/BigLink';
 
 const AboutMe = () => {
-  const links = ['Статичный сайт', 'Адаптивный сайт', 'Одностраничное приложение'];
+  const links = [
+    { 
+      name: 'Статичный сайт',
+      link: 'https://rayn1998.github.io/russian-travel/',
+    },
+    {
+      name: 'Адаптивный сайт',
+      link: 'https://rayn1998.github.io/mesto/',
+    }, {
+      name: 'Одностраничное приложение',
+      link: 'https://bodolanov-vfx.000webhostapp.com/',
+    },
+  ];
   return (
-    <div className="about-me">
+    <section className="about-me">
       <div className="about-me__container">
         <BlockHeader text="Студент" />
         {/* DESCRIPTION */}
@@ -34,7 +46,8 @@ const AboutMe = () => {
               return (
                 <BigLink 
                 key={i} 
-                text={link} 
+                text={link.name}
+                link={link.link}
                 border={i !== links.length - 1} 
                 />
               )})
@@ -42,7 +55,7 @@ const AboutMe = () => {
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

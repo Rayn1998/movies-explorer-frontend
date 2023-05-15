@@ -5,7 +5,7 @@ import { savedMovies } from 'utils/movies';
 
 const SavedMovies = () => {
   return (
-    <Layout>
+    <Layout footer>
       <Search />
       <div className="saved-movies">
         {savedMovies.map((movie, i) => <MovieCard key={i} props={movie} />)}

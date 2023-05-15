@@ -30,6 +30,12 @@
     padding: 15.9rem 9rem 9rem;
     box-sizing: border-box;
 
+    @media screen and (max-width: 450px) {
+      padding-left: 1rem;
+      padding-right: 1rem;
+      width: 100%;
+    }
+
     .nav-movies {
       height: 100%;
       width: 100%;
@@ -60,7 +66,7 @@
       }
     }
 
-    .nav-account-wrapper {
+    .nav-account__wrapper {
       display: flex;
       align-items: center;
       justify-content: center;

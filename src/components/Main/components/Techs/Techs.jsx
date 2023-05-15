@@ -12,7 +12,7 @@ const Techs = () => {
     'mongoDB',
   ];
   return (
-    <div className="techs">
+    <section className="techs">
       <div className="techs__wrapper">
         <BlockHeader text="Технологии" />
         <div className="techs__content">
@@ -28,7 +28,7 @@ const Techs = () => {
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

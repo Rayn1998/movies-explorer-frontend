@@ -2,7 +2,7 @@ import BlockHeader from '../BlockHeader/BlockHeader';
 
 const AboutProject = () => {
   return (
-    <div className="about-project">
+    <section className="about-project">
       <div className="about-project__container">
         <BlockHeader text="О проекте" />
         {/* STEPS */}
@@ -44,7 +44,7 @@ const AboutProject = () => {
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

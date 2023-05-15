@@ -6,6 +6,11 @@
   gap: 4rem;
   align-items: flex-start;
 
+  @media screen and (max-width: 450px) {
+    align-items: center;
+    margin-bottom: 4rem;
+  }
+
   .auth-header__title {
     @include text;
     font-size: 2.4rem;

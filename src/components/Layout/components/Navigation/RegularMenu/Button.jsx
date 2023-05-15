@@ -1,14 +1,13 @@
-import { useNavigate, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import { offMenu } from "redux/slices/menuSlice";
 
 const Button = ({ props }) => {
-  const { path, name } = props;
-  const navigate = useNavigate();
+  const { handleClick: click, name, path } = props;
   const location = useLocation();
   const dispatch = useDispatch();
   const handleClick = () => {
-    navigate(path);
+    click();
     dispatch(offMenu());
   }
   return (

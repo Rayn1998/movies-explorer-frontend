@@ -5,10 +5,12 @@ const Profile = () => {
   return (
     <Layout>
       <div className="profile">
-        <h2 className="profile__title">Привет, Виталий!</h2>
-        <div className="profile__form">
-          <Field name={'Имя'} value={'Виталий'} border />
-          <Field name={'E-mail'} value={'pochta@yandex.ru'} />
+        <div className="profile__head-wrapper">
+          <h2 className="profile__title">Привет, Виталий!</h2>
+          <div className="profile__form">
+            <Field name={'Имя'} value={'Виталий'} border />
+            <Field name={'E-mail'} value={'pochta@yandex.ru'} />
+          </div>
         </div>
         <div className="profile__buttons">
           <p className="profile__edit-btn">Редактировать</p>

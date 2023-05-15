@@ -8,7 +8,10 @@
 
   @media screen and (max-width: 768px) {
     padding: 9rem 5rem;
-    // max-height: 99.4rem;
+  }
+
+  @media screen and (max-width: 450px) {
+    padding: 9rem 1.4rem;
   }
   
   .about-me__container {
@@ -23,6 +26,12 @@
 
       @media screen and (max-width: 570px) {
         flex-direction: column;
+      }
+
+      @media screen and (max-width: 450px) {
+        flex-flow: column-reverse;
+        margin-top: 6rem;
+        gap: 4rem;
       }
 
       .about-me__description-text-container {
@@ -41,6 +50,11 @@
             font-size: 4rem;
             line-height: 4rem;
           }
+
+          @media screen and (max-width: 450px) {
+            font-size: 3rem;
+            line-height: 3.6rem;
+          }
         }
 
         .about-me__description-position {
@@ -53,6 +67,12 @@
             font-size: 1.2rem;
             line-height: 1.8rem;
           }
+
+          @media screen and (max-width: 450px) {
+            font-size: 1.1rem;
+            line-height: 1.6rem;
+            margin-top: 0.2rem;
+          }
         }
 
         .about-me__description-bio {
@@ -64,6 +84,12 @@
             font-size: 1.2rem;
             line-height: 1.8rem;
           }
+
+          @media screen and (max-width: 450px) {
+            font-size: 1.1rem;
+            line-height: 1.6rem;
+            margin-top: 0.2rem;
+          }
         }
 
         .about-me__description-github {
@@ -72,6 +98,10 @@
           font-weight: 500;
           font-size: 1.4rem;
           line-height: 1.7rem;
+
+          @media screen and (max-width: 450px) {
+            margin-top: 2rem;
+          }
         }
       }
 
@@ -94,6 +124,11 @@
 
       @media screen and (max-width: 768px) {
         margin-top: 9rem;
+      }
+
+      @media screen and (max-width: 450px) {
+        margin-top: 7rem;
+        gap: 4rem;
       }
 
       .about-me__portfolio-header {

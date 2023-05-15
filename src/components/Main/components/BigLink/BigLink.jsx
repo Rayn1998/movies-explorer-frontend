@@ -1,7 +1,10 @@
-const BigLink = ({ text, border }) => {
+const BigLink = ({ text, border, link }) => {
+  const handleClick = () => {
+    window.open(link);
+  }
   return (
     <>
-      <div className="big-link">
+      <div className="big-link" onClick={handleClick}>
         <h2 className="big-link__text">{text}</h2>
         <div className="big-link__arrow">↗</div>
       </div>

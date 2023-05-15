@@ -20,7 +20,7 @@
     flex-direction: column;
     gap: 7rem;
 
-    @media screen and (max-width: 320px) {
+    @media screen and (max-width: 450px) {
       gap: 6rem;
     }
 
@@ -28,8 +28,9 @@
     .about-project__steps-wrapper {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
+      column-gap: 3rem;
 
-      @media screen and (max-width: 320px) {
+      @media screen and (max-width: 450px) {
         display: flex;
         flex-direction: column;
         gap: 5.6rem;
@@ -40,7 +41,7 @@
         flex-direction: column;
         gap: 2.6rem;
 
-        @media screen and (max-width: 320px) {
+        @media screen and (max-width: 450px) {
           gap: 1.6rem;
         }
 
@@ -50,7 +51,7 @@
           line-height: 2.4rem;
           letter-spacing: -0.04em;
 
-          @media screen and (max-width: 320px) {
+          @media screen and (max-width: 450px) {
             font-size: 1.8rem;
             line-height: 2.2rem;
           }
@@ -85,7 +86,7 @@
           background-color: $light-grey;
           min-height: 3.6rem;
 
-          @media screen and (max-width: 320px) {
+          @media screen and (max-width: 450px) {
             grid-template-columns: 1fr 2fr;
           }
 
@@ -97,7 +98,7 @@
             font-size: 1.4rem;
             line-height: 1.7rem;
 
-            @media screen and (max-width: 320px) {
+            @media screen and (max-width: 450px) {
               font-size: 1.1rem;
               line-height: 1.3rem;
             }
@@ -116,7 +117,7 @@
           justify-items: center;
           margin-top: 1.4rem;
 
-          @media screen and (max-width: 320px) {
+          @media screen and (max-width: 450px) {
             grid-template-columns: 1fr 2fr;
           }
 
@@ -125,7 +126,7 @@
             line-height: 1.7rem;
             color: $grey-text;
 
-            @media screen and (max-width: 320px) {
+            @media screen and (max-width: 450px) {
               font-size: 1.1rem;
               line-height: 1.3rem;
             }

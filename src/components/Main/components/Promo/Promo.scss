@@ -11,7 +11,7 @@
     padding: 21.4rem 4.4rem 7.6rem;
   }
 
-  @media screen and (max-width: 320px) {
+  @media screen and (max-width: 450px) {
     padding: 14.4rem 1rem 3rem;
   }
 
@@ -52,7 +52,7 @@
           line-height: 5rem;
         }
 
-        @media screen and (max-width: 320px) {
+        @media screen and (max-width: 450px) {
           font-size: 3rem;
           max-width: 30rem;
           font-weight: 40rem;
@@ -102,7 +102,7 @@
     .promo__image {
       max-width: 31rem;
 
-      @media screen and (max-width: 320px) {
+      @media screen and (max-width: 450px) {
         max-width: 21rem;
       }
     }

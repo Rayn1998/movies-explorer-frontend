@@ -1,12 +1,12 @@
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 
-const Layout = ({ children }) => {
+const Layout = ({ footer, children }) => {
   return (
     <>
       <Header />
       {children}
-      <Footer />
+      {footer && <Footer />}
     </>
   );
 };

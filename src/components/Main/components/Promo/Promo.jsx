@@ -2,7 +2,7 @@ import Logo from 'assets/images/landing-logo.png';
 
 const Promo = () => {
   return (
-    <div className="promo">
+    <section className="promo">
       <div className="promo-container">
         <div className="promo__info">
           <h1 className="promo__header">
@@ -15,7 +15,7 @@ const Promo = () => {
         </div>
         <img className="promo__image" alt="Logo" src={Logo} />
       </div>
-    </div>
+    </section>
   );
 };
 

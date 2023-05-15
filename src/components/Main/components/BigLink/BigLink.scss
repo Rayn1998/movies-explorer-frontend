@@ -3,6 +3,12 @@
 .big-link {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+
+  @media screen and (max-width: 400px) {
+    max-height: 2.8rem;
+  }
 
   .big-link__text {
     @include text;

@@ -11,7 +11,7 @@ const MainMenu = ({ props }) => {
           <Button key={i} props={item} />
         ))}
       </div>
-      <div className="nav-account-wrapper" onClick={handleProfileClick}>
+      <div className="nav-account__wrapper" onClick={handleProfileClick}>
         <img src={accountIcon} alt="Account icon" />
         <button className="nav-account" style={{ cursor: 'pointer' }}>
           Аккаунт

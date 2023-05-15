@@ -7,7 +7,7 @@ import { movies } from 'utils/movies';
 const Movies = () => {
   
   return (
-    <Layout>
+    <Layout footer>
       <div className="movies">
         <Search />
         <div className="movies__container" >
