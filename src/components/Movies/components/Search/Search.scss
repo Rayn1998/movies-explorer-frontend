@@ -59,6 +59,12 @@
         background-size: contain;
         background-repeat: no-repeat;
         background-position: center;
+        background-color: transparent;
+        border: none;
+
+        &:hover {
+          opacity: 0.8;
+        }
       }
     }
 

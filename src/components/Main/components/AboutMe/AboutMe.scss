@@ -26,10 +26,10 @@
 
       @media screen and (max-width: 570px) {
         flex-direction: column;
+        flex-flow: column-reverse;
       }
 
       @media screen and (max-width: 450px) {
-        flex-flow: column-reverse;
         margin-top: 6rem;
         gap: 4rem;
       }

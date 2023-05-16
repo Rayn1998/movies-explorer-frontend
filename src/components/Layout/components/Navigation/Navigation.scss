@@ -60,7 +60,7 @@
     cursor: pointer;
   }
 
-  .nav-account-wrapper {
+  .nav-movies__account-wrapper {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -76,6 +76,7 @@
     .nav-account {
       background-color: transparent;
       border: none;
+      cursor: pointer;
     }
   }
 }

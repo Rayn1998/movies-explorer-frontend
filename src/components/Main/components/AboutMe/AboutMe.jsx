@@ -41,7 +41,7 @@ const AboutMe = () => {
         {/* PORTFOLIO */}
         <div className='about-me__portfolio'>
           <h3 className='about-me__portfolio-header'>Портфолио</h3>
-          <div className='about-me__portfolio-links'>
+          <ul className='about-me__portfolio-links'>
             {links.map((link, i) => {
               return (
                 <BigLink 
@@ -52,7 +52,7 @@ const AboutMe = () => {
                 />
               )})
             }
-          </div>
+          </ul>
         </div>
       </div>
     </section>

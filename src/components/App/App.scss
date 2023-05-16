@@ -13,7 +13,26 @@
     position: fixed;
     top: 0;
     right: 0;
-    // background-color: $black;
     z-index: 2;
+
+    .nav-movies__account-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.7rem;
+      width: 10rem;
+      height: 3.2rem;
+      border: 0.2rem solid $input-outline-02opaque;
+      border-radius: 5rem;
+      padding: 0.8rem 1.2rem;
+      box-sizing: border-box;
+      cursor: pointer;
+  
+      .nav-account {
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+      }
+    }
   }
 }

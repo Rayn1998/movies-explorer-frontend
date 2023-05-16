@@ -11,14 +11,14 @@ const Header = () => {
     navigation('/');
   }
   return (
-    <div className="header" style={{
+    <header className="header" style={{
       visibility: menu ? 'hidden' : 'visible',
       opacity: menu ? 0 : 1,
       transition: 'all 0.3s ease-in-out',
     }}>
         <img src={HeaderLogo} alt="Logo" onClick={handleClickLogo} style={{cursor: 'pointer'}} />
         <Navigation />
-    </div>
+    </header>
   );
 };
 

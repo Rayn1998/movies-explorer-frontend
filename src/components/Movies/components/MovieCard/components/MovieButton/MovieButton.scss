@@ -11,6 +11,7 @@
   height: 2.9rem;
   border-radius: 3rem;
   @include flexColCen;
+  border: none;
   cursor: pointer;
 
   .movie-button-checked {

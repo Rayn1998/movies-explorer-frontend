@@ -18,7 +18,7 @@ const MovieButton = ({ path }) => {
   }
 
   return (
-    <div 
+    <button 
       className="movie-button" 
       style={{
         backgroundColor: path === '/movies' && isClicked ? '#EE3465' : '#313131',
@@ -26,7 +26,7 @@ const MovieButton = ({ path }) => {
       onClick={handleClick}
     >
       {path === '/movies' ? search() : saved()}
-    </div>
+    </button>
   );
 }
 

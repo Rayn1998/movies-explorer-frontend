@@ -4,10 +4,10 @@ const Search = () => {
   return (
     <div className="search">
       <div className="search__content">
-        <div className="search__input-wrapper">
-          <input className="search__input" />
-          <div className="search__input-btn"></div>
-        </div>
+        <form className="search__input-wrapper">
+          <input className="search__input" required />
+          <button className="search__input-btn"></button>
+        </form>
         <div className="search__slider-wrapper">
           <p className="search__slider-title">Короткометражки</p>
           <SearchSlider />

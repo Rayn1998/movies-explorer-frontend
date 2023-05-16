@@ -27,13 +27,25 @@
   }
 
   .big-link__arrow {
-    @include text;
-    font-size: 3rem;
-    line-height: 6rem;
-    letter-spacing: -0.04em;
+    background-image: url('../../../../assets/images/about-me__arrow.svg');
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 2.6rem;
+    height: 3rem;
+    
+    @media screen and (max-width: 768px) {
+      width: 2.2rem;
+      height: 3rem;
+    }
+
+    @media screen and (max-width: 400px) {
+      width: 1.4rem;
+      height: 2.8rem;
+    }
   }
 }
 
-.big-link__border {
+.about-me__border {
   @include linkBorder;
 }

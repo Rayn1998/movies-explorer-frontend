@@ -1,7 +1,7 @@
 import AuthHeader from '../AuthHeader/AuthHeader';
 import { useNavigate } from 'react-router-dom';
 
-const Auth = ({
+const AuthBase = ({
   title,
   submit,
   children,
@@ -23,7 +23,7 @@ const Auth = ({
         </form>
       </div>
       <div className="auth__footer-wrapper">
-        <button className="auth__submit">{btnText}</button>
+        <button type='submit' className="auth__submit">{btnText}</button>
         <div className="auth__footer-block">
           <p className="auth__footer-question">{footerQuestion}</p>
           <p className="auth__footer-btn" onClick={handleBtnClick}>
@@ -35,4 +35,4 @@ const Auth = ({
   );
 };
 
-export default Auth;
+export default AuthBase;
