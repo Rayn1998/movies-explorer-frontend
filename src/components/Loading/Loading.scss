@@ -1,0 +1,24 @@
+@keyframes rotateAnimation {
+  0% {
+    transform: rotate(0);
+  }
+  
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.loading {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10rem;
+  box-sizing: border-box;
+
+  .loading__img {
+    width: 20rem;
+    animation: rotateAnimation 2s infinite linear;
+  }
+}

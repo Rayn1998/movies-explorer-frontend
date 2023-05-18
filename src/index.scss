@@ -33,7 +33,10 @@
 @use 'components/Auth/components/AuthBase/AuthBase';
 @use 'components/Auth/components/AuthField/AuthField';
 @use 'components/Auth/components/AuthHeader/AuthHeader';
+@use 'components/Auth/components/SubmitButton/SubmitButton.scss';
 
+// LOADING
+@use 'components/Loading/Loading.scss';
 
 @use 'scss' as *;
 

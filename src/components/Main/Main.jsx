@@ -6,7 +6,7 @@ import Layout from 'components/Layout/Layout';
 
 const Main = () => {
   return (
-    <Layout footer>
+    <Layout footer >
       <main className="main">
         <Promo />
         <AboutProject />

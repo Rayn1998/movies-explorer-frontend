@@ -11,6 +11,12 @@
     margin-bottom: 4rem;
   }
 
+  .auth-header__img {
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
   .auth-header__title {
     @include text;
     font-size: 2.4rem;
