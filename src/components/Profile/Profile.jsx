@@ -1,8 +1,12 @@
-import { useCallback, useState, useEffect, memo } from 'react';
+import { useCallback, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
 import { useSelector, useDispatch } from 'react-redux';
 import { setUser } from 'redux/slices/userSlice';
+import { onError, offError } from 'redux/slices/errorPopupSlice';
 
+import { emailCheck } from 'utils/regExpressions';
+import { mainApi } from 'utils/MainApi';
 import Layout from 'components/Layout/Layout';
 import Field from './components/Field/Field';
 
@@ -15,6 +19,33 @@ const Profile = () => {
   const [inputEmail, setInputEmail] = useState('');
   const [editAvailable, setEditAvailable] = useState(0);
 
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm();
+
+  const setSubmit = useCallback((data) => {
+    mainApi
+      .updateUser(data)
+      .then((res) => {
+        if (res.message) {
+          dispatch(onError(res.message));
+          setTimeout(() => {
+            dispatch(offError());
+          }, 10000);
+        } else {
+          dispatch(setUser(res));
+        }
+      })
+      .catch(() => {
+        dispatch(onError('С сервером беда'));
+        setTimeout(() => {
+          dispatch(offError());
+        }, 10000);
+      });
+  }, []);
+
   const handleLogout = useCallback(() => {
     dispatch(setUser({}));
     localStorage.removeItem('token');
@@ -22,10 +53,8 @@ const Profile = () => {
   }, []);
 
   useEffect(() => {
-    if (
-      inputName !== user.name || inputEmail !== user.email 
-    ) {
-      setEditAvailable(true)
+    if (inputName !== user.name || inputEmail !== user.email) {
+      setEditAvailable(true);
     } else {
       setEditAvailable(false);
     }
@@ -40,29 +69,53 @@ const Profile = () => {
       <div className="profile">
         <div className="profile__head-wrapper">
           <h2 className="profile__title">Привет, {user.name}!</h2>
-          <form className="profile__form">
+          <form className="profile__form" onSubmit={handleSubmit(setSubmit)}>
             <Field
               name={'Имя'}
-              value={inputName}
-              changeValue={setInputName}
+              // value={inputName}
               border
+              register={{
+                ...register('name', {
+                  required: 'Name is required',
+                  minLength: {
+                    value: 3,
+                    message: 'Minimum length of name is 3 symbols',
+                  },
+                  value: user.name,
+                  onChange: (e) => setInputName(e.target.value),
+                }),
+              }}
             />
             <Field
               name={'E-mail'}
-              value={inputEmail}
-              changeValue={setInputEmail}
+              register={{
+                ...register('email', {
+                  required: 'Email is required',
+                  pattern: {
+                    value: emailCheck,
+                    message: 'Email is incorrect',
+                  },
+                  value: user.email,
+                  onChange: (e) => setInputEmail(e.target.value),
+                }),
+              }}
             />
           </form>
         </div>
         <div className="profile__buttons">
-          <p 
-            className="profile__edit-btn" 
+          <button
+            type="submit"
+            onClick={handleSubmit(setSubmit)}
+            className="profile__edit-btn"
+            disabled={!editAvailable}
             style={{
               opacity: editAvailable ? 1 : 0.25,
               cursor: editAvailable ? 'pointer' : 'not-allowed',
               position: editAvailable ? 'relative' : 'static',
             }}
-          >Редактировать</p>
+          >
+            Редактировать
+          </button>
           <p className="profile__exit-btn" onClick={handleLogout}>
             Выйти из аккаунта
           </p>

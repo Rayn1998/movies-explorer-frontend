@@ -7,7 +7,7 @@ class MainApi {
     if (res.ok) {
       return res.json();
     } else {
-      return res.json().then((res) => console.log(res));
+      return res.json().then((res) => res);
     }
   }
 
@@ -57,6 +57,41 @@ class MainApi {
     } else {
       return Promise.reject(`Error: You are unauthorized`);
     }
+  }
+
+  updateUser(data) {
+    const jwt = localStorage.getItem('token');
+    return this._request(`${this.url}/users/me`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${jwt}`,
+      },
+      body: JSON.stringify(data),
+    })
+  }
+
+  getMovies() {
+    const jwt = localStorage.getItem('token');
+    return this._request(`${this.url}/movies`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${jwt}`,
+      },
+    })
+  }
+
+  addFavourite(data) {
+    const jwt = localStorage.getItem('token');
+    return this._request(`${this.url}/movies`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${jwt}`,
+      },
+      body: JSON.stringify(data),
+    })
   }
 }
 

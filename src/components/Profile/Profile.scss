@@ -46,6 +46,8 @@
       color: $white;
       cursor: pointer;
       position: relative;
+      background-color: transparent;
+      border: none;
 
       @include underlineAnim;
       &::before {

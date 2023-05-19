@@ -10,7 +10,6 @@ const AuthBase = ({
   footerQuestion,
   footerBtn,
   footerLink,
-  reset,
 }) => {
   const navigation = useNavigate();
   const handleBtnClick = () => {

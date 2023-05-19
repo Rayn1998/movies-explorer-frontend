@@ -18,6 +18,7 @@ import SavedMovies from 'components/SavedMovies/SavedMovies';
 import Profile from 'components/Profile/Profile';
 import PageNotFound from 'components/PageNotFound/PageNotFound';
 import SmallMenu from 'components/Layout/components/Navigation/SmallMenu/SmallMenu';
+import ErrorPopup from 'components/ErrorPopup/ErrorPopup';
 
 function App() {
   const errorPopup = useSelector((state) => state.error);
@@ -91,18 +92,7 @@ function App() {
         </>
       )}
 
-      <div
-        className="error__popup"
-        style={{
-          transform: errorPopup.open ? 'translateX(0)' : 'translateX(-700px)',
-        }}
-      >
-        <p className="error__message">{errorPopup.message}</p>
-        <button
-          onClick={() => dispatch(offError())}
-          className="error__close-btn"
-        ></button>
-      </div>
+      <ErrorPopup />
     </div>
   );
 }

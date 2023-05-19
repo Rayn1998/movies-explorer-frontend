@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { onLoading, offLoading } from "redux/slices/loadingSlice";
 import { setUser } from "redux/slices/userSlice";
 import { onError, offError } from "redux/slices/errorPopupSlice";
+import ErrorPopup from "components/ErrorPopup/ErrorPopup";
 
 const Layout = ({ footer, children }) => {
   const dispatch = useDispatch();
@@ -34,6 +35,7 @@ const Layout = ({ footer, children }) => {
       <Header />
       {children}
       {footer && <Footer />}
+      {/* <ErrorPopup /> */}
     </>
   );
 };

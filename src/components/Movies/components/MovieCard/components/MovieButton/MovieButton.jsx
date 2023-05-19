@@ -1,10 +1,19 @@
 import { useState } from 'react';
+import { mainApi } from 'utils/MainApi';
 
-const MovieButton = ({ path }) => {
+const MovieButton = ({ path, props }) => {
   const [isClicked, setIsClicked] = useState(false);
 
   const handleClick = () => {
-    setIsClicked(!isClicked);
+    const { image } = props;
+    const data = Object.assign({}, props, {image: image.url, thumbnail: image.url, movieId: image.id})
+    mainApi
+      .addFavourite(data)
+      .then(() => {
+        setIsClicked(!isClicked);
+        console.log('added')
+      })
+      .catch(err => console.log('err', err));
   };
 
   const search = () => {
