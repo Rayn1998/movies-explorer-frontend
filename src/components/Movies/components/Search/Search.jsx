@@ -11,7 +11,7 @@ const Search = ({ props }) => {
         </form>
         <div className="search__slider-wrapper">
           <p className="search__slider-title">Короткометражки</p>
-          <SearchSlider props={props} />
+          <SearchSlider />
         </div>
       </div>
       <div className="search__divider"></div>

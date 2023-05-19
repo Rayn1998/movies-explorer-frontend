@@ -93,9 +93,19 @@ class MainApi {
       body: JSON.stringify(data),
     })
   }
+
+  removeFavourite(id) {
+    const jwt = localStorage.getItem('token');
+    return this._request(`${this.url}/movies/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${jwt}`,
+      },
+    })
+  }
 }
 
 // http://api.bodolanov.diploma.nomoredomains.monster
 // http://localhost:3001
-
-export const mainApi = new MainApi('http://localhost:3001');
+export const mainApi = new MainApi('http://api.bodolanov.diploma.nomoredomains.monster');

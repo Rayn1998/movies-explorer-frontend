@@ -35,6 +35,12 @@ const Login = () => {
     mainApi
       .login(data)
       .then((res) => {
+        if (res.message) {
+          dispatch(onError(res.message));
+          setTimeout(() => {
+            dispatch(offError());
+          }, 10000);
+        }
         localStorage.setItem('token', res.token);
         mainApi
           .checkToken(res)

@@ -1,30 +1,34 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
-import { mainApi } from 'utils/MainApi';
 import Layout from 'components/Layout/Layout';
 import Search from 'components/Movies/components/Search/Search';
 import MovieCard from 'components/Movies/components/MovieCard/MovieCard';
-// import { savedMovies } from 'utils/movies';
+import { useSelector } from 'react-redux';
 
 const SavedMovies = () => {
-  // const { nameRU, duration, image, trailerLink } = props;
-  // const { url, name: imageName } = image;
-  const [savedMovies, setSavedMovies] = useState([]);
-  useEffect(() => {
-    mainApi.getMovies()
-      .then(res => {
-        console.log(res)
-        setSavedMovies(res);
-      })
-      .catch(err => {
-        console.log(err);
-      })
-  }, []);
+  const savedMovies = useSelector((state) => state.savedMovies.savedMovies);
+
+  const [searchInput, setSearchInput] = useState('');
   return (
     <Layout footer>
-      {/* <Search /> */}
+      <Search props={{ searchInput, setSearchInput }} />
       <div className="saved-movies">
-        {savedMovies.map((movie, i) => <MovieCard key={i} props={movie} />)}
+        {searchInput === ''
+          ? savedMovies.map((movie) => {
+              return <MovieCard key={movie.movieId} props={movie} />;
+            })
+          : savedMovies
+              .filter((item) => {
+                return (
+                  item.nameRU
+                    .toLowerCase()
+                    .includes(searchInput.toLowerCase()) ||
+                  item.nameEN.toLowerCase().includes(searchInput.toLowerCase())
+                );
+              })
+              .map((movie, i) => {
+                return <MovieCard key={movie.movieId} props={movie} />;
+              })}
       </div>
     </Layout>
   );

@@ -88,6 +88,7 @@
         box-sizing: border-box;
         border: 0.1rem solid $white-half-opaque;
         border-radius: 0.3rem;
+        cursor: pointer;
 
         @media screen and (max-width: 768px) {
           margin-top: 5.6rem;

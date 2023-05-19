@@ -35,6 +35,10 @@ const Profile = () => {
             dispatch(offError());
           }, 10000);
         } else {
+          dispatch(onError('Обновлено'));
+          setTimeout(() => {
+            dispatch(offError());
+          }, 10000);
           dispatch(setUser(res));
         }
       })
@@ -58,7 +62,7 @@ const Profile = () => {
     } else {
       setEditAvailable(false);
     }
-  }, [inputName, inputEmail]);
+  }, [inputName, inputEmail, user]);
 
   useEffect(() => {
     setInputEmail(user.email);

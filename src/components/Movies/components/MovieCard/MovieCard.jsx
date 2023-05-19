@@ -1,12 +1,14 @@
+import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 import MovieButton from './components/MovieButton/MovieButton';
 
 const MovieCard = ({ props }) => {
   const { nameRU, duration, image, trailerLink } = props;
-  const { url, name: imageName } = image;
 
   const location = useLocation();
+  const { url, name: imageName } = image;
 
   return (
     <div className="movie-card">
@@ -21,11 +23,11 @@ const MovieCard = ({ props }) => {
       >
         <img
           className="movie-card__image"
-          src={`https://api.nomoreparties.co/${url}`}
+          src={location.pathname === '/saved' ? `https://api.nomoreparties.co/${image}` : `https://api.nomoreparties.co/${url}`}
           alt={imageName}
         />
       </a>
-      <MovieButton path={location.pathname} props={props} />
+      <MovieButton props={props} />
     </div>
   );
 };

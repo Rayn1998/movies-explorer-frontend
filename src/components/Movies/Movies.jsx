@@ -4,14 +4,16 @@ import MovieCard from './components/MovieCard/MovieCard';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { setMovies } from 'redux/slices/moviesSlice';
+import { setSavedMovies } from 'redux/slices/savedMoviesSlice';
 import { useEffect, useState, useCallback, useRef } from 'react';
 import { moviesApi } from 'utils/MoviesApi';
+import { mainApi } from 'utils/MainApi';
 
 const Movies = () => {
   const movies = useSelector((state) => state.movies.movies);
+  const slider = useSelector((state) => state.slider.slider);
   const dispatch = useDispatch();
   const [moviesLimiter, setMoviesLimiter] = useState(12);
-  const [shortMovies, setShortMovies] = useState(false);
   const [searchInput, setSearchInput] = useState('');
 
   const handleAddClick = useCallback(() => {
@@ -26,18 +28,27 @@ const Movies = () => {
   }, []);
 
   useEffect(() => {
-    moviesApi
+    mainApi
       .getMovies()
       .then((res) => {
-        longs.current = res;
-        setNewMovies(longs.current);
-        setShorts(res);
+        dispatch(setSavedMovies(res));
+        moviesApi
+          .getMovies()
+          .then((res) => {
+            longs.current = res;
+            setNewMovies(longs.current);
+            setShorts(res);
+          })
+          .catch((err) => console.log(err));
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
 
   const setShorts = useCallback((arr) => {
     shorts.current = arr.filter((movie) => movie.duration <= 40);
+    // console.log(shorts.current);
   }, []);
 
   return (
@@ -45,46 +56,41 @@ const Movies = () => {
       <div className="movies">
         <Search
           props={{
-            shortMovies,
-            setShortMovies,
             searchInput,
             setSearchInput,
-            longs,
-            shorts,
-            setNewMovies,
           }}
         />
         <div className="movies__container">
-          {shortMovies 
-            ? (searchInput === ''
-                ? shorts.current.map((movie, i) => {
+          {slider
+            ? searchInput === ''
+              ? shorts.current?.map((movie, i) => {
                   while (i <= moviesLimiter) {
                     return <MovieCard key={movie.id} props={movie} />;
                   }
+                })
+              : shorts.current
+                  .filter((item) => {
+                    return (
+                      item.nameRU
+                        .toLowerCase()
+                        .includes(searchInput.toLowerCase()) ||
+                      item.nameEN
+                        .toLowerCase()
+                        .includes(searchInput.toLowerCase())
+                    );
                   })
-                : shorts.current
-                    .filter((item) => {
-                      return (
-                        item.nameRU
-                          .toLowerCase()
-                          .includes(searchInput.toLowerCase()) ||
-                        item.nameEN
-                          .toLowerCase()
-                          .includes(searchInput.toLowerCase())
-                      );
-                    })
-                    .map((movie, i) => {
-                      while (i <= moviesLimiter) {
-                        return <MovieCard key={movie.id} props={movie} />;
-                      }
-                    })) 
-            : (searchInput === ''
-              ? movies.map((movie) => {
+                  .map((movie, i) => {
+                    while (i <= moviesLimiter) {
+                      return <MovieCard key={movie.id} props={movie} />;
+                    }
+                  })
+            : searchInput === ''
+            ? movies?.map((movie) => {
                 while (movie.id <= moviesLimiter) {
                   return <MovieCard key={movie.id} props={movie} />;
                 }
-                })
-              : movies
+              })
+            : movies
                 .filter((item) => {
                   return (
                     item.nameRU
@@ -99,15 +105,18 @@ const Movies = () => {
                   while (movie.id <= moviesLimiter) {
                     return <MovieCard key={movie.id} props={movie} />;
                   }
-                }))
-          }
+                })}
         </div>
         <div className="movies__add-more">
           <button
             className="movies__add-btn"
             onClick={handleAddClick}
             style={{
-              display: moviesLimiter >= (shortMovies ? shorts.current : longs.current)?.length ? 'none' : 'flex',
+              display:
+                moviesLimiter >=
+                (slider ? shorts.current : longs.current)?.length
+                  ? 'none'
+                  : 'flex',
             }}
           >
             Ещё
