@@ -23,7 +23,11 @@ const MovieCard = ({ props }) => {
       >
         <img
           className="movie-card__image"
-          src={location.pathname === '/saved' ? `https://api.nomoreparties.co/${image}` : `https://api.nomoreparties.co/${url}`}
+          src={
+            location.pathname === '/saved'
+              ? `https://api.nomoreparties.co/${image}`
+              : `https://api.nomoreparties.co/${url}`
+          }
           alt={imageName}
         />
       </a>

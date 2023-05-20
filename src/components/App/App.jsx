@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { onLoading, offLoading } from 'redux/slices/loadingSlice';
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import { setUser } from 'redux/slices/userSlice';
 import { onError, offError } from 'redux/slices/errorPopupSlice';
@@ -21,7 +21,6 @@ import SmallMenu from 'components/Layout/components/Navigation/SmallMenu/SmallMe
 import ErrorPopup from 'components/ErrorPopup/ErrorPopup';
 
 function App() {
-  const errorPopup = useSelector((state) => state.error);
   const menu = useSelector((state) => state.menu.open);
   const loading = useSelector((state) => state.loading.loading);
   const navigate = useNavigate();
@@ -39,12 +38,14 @@ function App() {
         })
         .catch((err) => {
           dispatch(onError(err));
+          localStorage.removeItem('token');
           setTimeout(() => {
             dispatch(offError());
           }, 10000);
         });
     } else {
       dispatch(offLoading());
+      navigate('/login');
     }
   }, [localStorage.getItem('token')]);
 
