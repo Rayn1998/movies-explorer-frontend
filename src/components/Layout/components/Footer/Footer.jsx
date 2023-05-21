@@ -7,10 +7,22 @@ const Footer = () => {
         </p>
         <div className="footer__divider"></div>
         <div className="footer__bottom">
-          <p className="footer__year">© 2020</p>
+          <p className="footer__year">© 2023</p>
           <div className="footer__bottom-right">
-            <p className="footer__bottom-yandex">Яндекс.Практикум</p>
-            <p className="footer__bottom-github">Github</p>
+            <a
+              className="footer__bottom-yandex"
+              href="https://practicum.yandex.ru/"
+              target="_blank"
+            >
+              Яндекс.Практикум
+            </a>
+            <a
+              className="footer__bottom-github"
+              href="https://github.com/Rayn1998/movies-explorer-frontend"
+              target="_blank"
+            >
+              Github
+            </a>
           </div>
         </div>
       </div>

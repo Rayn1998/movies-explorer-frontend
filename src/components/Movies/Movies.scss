@@ -31,3 +31,8 @@
     }
   }
 }
+
+.saved-movies {
+  @include movieContainer;
+  @include centerContainer;
+}

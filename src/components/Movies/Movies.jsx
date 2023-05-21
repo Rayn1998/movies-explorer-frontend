@@ -1,18 +1,21 @@
 import Layout from 'components/Layout/Layout';
 import Search from './components/Search/Search';
-import MovieCard from './components/MovieCard/MovieCard';
+import MoviesContainer from './components/MoviesContainer/MoviesContainer';
+import SavedMoviesContainer from './components/SavedMoviesContainer/SavedMoviesContainer';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { setMovies } from 'redux/slices/moviesSlice';
 import { setSavedMovies } from 'redux/slices/savedMoviesSlice';
 import { useEffect, useState, useCallback, useRef } from 'react';
+import { useLocation } from 'react-router-dom';
 import { moviesApi } from 'utils/MoviesApi';
 import { mainApi } from 'utils/MainApi';
 
-const Movies = () => {
+const Movies = ({ errorHandler }) => {
   const movies = useSelector((state) => state.movies.movies);
   const slider = useSelector((state) => state.slider.slider);
   const dispatch = useDispatch();
+  const location = useLocation();
   const [moviesLimiter, setMoviesLimiter] = useState(12);
   const [searchInput, setSearchInput] = useState('');
 
@@ -23,10 +26,6 @@ const Movies = () => {
   const longs = useRef();
   const shorts = useRef();
 
-  const setNewMovies = useCallback((arr) => {
-    arr !== 'undefined' && dispatch(setMovies(arr));
-  }, []);
-
   useEffect(() => {
     mainApi
       .getMovies()
@@ -36,92 +35,57 @@ const Movies = () => {
           .getMovies()
           .then((res) => {
             longs.current = res;
-            setNewMovies(longs.current);
             setShorts(res);
           })
-          .catch((err) => console.log(err));
+          .catch((err) => {
+            errorHandler(err.message);
+          });
       })
       .catch((err) => {
-        console.log(err);
+        errorHandler(err.message);
       });
   }, []);
 
   const setShorts = useCallback((arr) => {
     shorts.current = arr.filter((movie) => movie.duration <= 40);
-    // console.log(shorts.current);
   }, []);
+
+  const filterArray = (data) => {
+    return data.filter((item) => {
+      return (
+        item.nameRU.toLowerCase().includes(searchInput.toLowerCase()) ||
+        item.nameEN.toLowerCase().includes(searchInput.toLowerCase())
+      );
+    });
+  };
+
+  useEffect(() => {
+    let newMovies = [];
+    if (slider && searchInput !== '') {
+      newMovies = filterArray(shorts.current);
+      dispatch(setMovies(newMovies));
+    } else if (!slider && searchInput !== '') {
+      newMovies = filterArray(longs.current);
+      dispatch(setMovies(newMovies));
+    } else {
+      dispatch(setMovies([]));
+    }
+  }, [searchInput, slider]);
 
   return (
     <Layout footer>
       <div className="movies">
         <Search
           props={{
-            searchInput,
             setSearchInput,
+            errorHandler,
           }}
         />
-        <div className="movies__container">
-          {slider
-            ? searchInput === ''
-              ? shorts.current?.map((movie, i) => {
-                  while (i <= moviesLimiter) {
-                    return <MovieCard key={movie.id} props={movie} />;
-                  }
-                })
-              : shorts.current
-                  .filter((item) => {
-                    return (
-                      item.nameRU
-                        .toLowerCase()
-                        .includes(searchInput.toLowerCase()) ||
-                      item.nameEN
-                        .toLowerCase()
-                        .includes(searchInput.toLowerCase())
-                    );
-                  })
-                  .map((movie, i) => {
-                    while (i <= moviesLimiter) {
-                      return <MovieCard key={movie.id} props={movie} />;
-                    }
-                  })
-            : searchInput === ''
-            ? movies?.map((movie) => {
-                while (movie.id <= moviesLimiter) {
-                  return <MovieCard key={movie.id} props={movie} />;
-                }
-              })
-            : movies
-                .filter((item) => {
-                  return (
-                    item.nameRU
-                      .toLowerCase()
-                      .includes(searchInput.toLowerCase()) ||
-                    item.nameEN
-                      .toLowerCase()
-                      .includes(searchInput.toLowerCase())
-                  );
-                })
-                .map((movie) => {
-                  while (movie.id <= moviesLimiter) {
-                    return <MovieCard key={movie.id} props={movie} />;
-                  }
-                })}
-        </div>
-        <div className="movies__add-more">
-          <button
-            className="movies__add-btn"
-            onClick={handleAddClick}
-            style={{
-              display:
-                moviesLimiter >=
-                (slider ? shorts.current : longs.current)?.length
-                  ? 'none'
-                  : 'flex',
-            }}
-          >
-            Ещё
-          </button>
-        </div>
+        {location.pathname === '/movies' ? (
+          <MoviesContainer props={{ movies, moviesLimiter, handleAddClick }} />
+        ) : (
+          location.pathname === '/saved' && <SavedMoviesContainer />
+        )}
       </div>
     </Layout>
   );

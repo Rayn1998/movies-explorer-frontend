@@ -1,8 +1,8 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { onLoading, offLoading } from 'redux/slices/loadingSlice';
 
-import { useEffect } from 'react';
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { useCallback, useEffect } from 'react';
+import { Routes, Route } from 'react-router-dom';
 import { setUser } from 'redux/slices/userSlice';
 import { onError, offError } from 'redux/slices/errorPopupSlice';
 
@@ -14,7 +14,6 @@ import Login from 'components/Auth/Login';
 import Register from 'components/Auth/Register';
 import Main from '../Main/Main';
 import Movies from '../Movies/Movies';
-import SavedMovies from 'components/SavedMovies/SavedMovies';
 import Profile from 'components/Profile/Profile';
 import PageNotFound from 'components/PageNotFound/PageNotFound';
 import SmallMenu from 'components/Layout/components/Navigation/SmallMenu/SmallMenu';
@@ -23,8 +22,15 @@ import ErrorPopup from 'components/ErrorPopup/ErrorPopup';
 function App() {
   const menu = useSelector((state) => state.menu.open);
   const loading = useSelector((state) => state.loading.loading);
-  const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const errorHandler = useCallback((err) => {
+    dispatch(onError(err));
+    setTimeout(() => {
+      dispatch(offError());
+    }, 10000);
+  }, []);
+
   useEffect(() => {
     dispatch(onLoading());
     const token = localStorage.getItem('token');
@@ -32,20 +38,21 @@ function App() {
       mainApi
         .checkToken(token)
         .then((res) => {
-          dispatch(setUser(res));
-          dispatch(offLoading());
-          navigate('/movies');
+          if (!res.message) {
+            dispatch(setUser(res));
+            dispatch(offLoading());
+          } else {
+            localStorage.removeItem('token');
+            errorHandler(res.message);
+            dispatch(offLoading());
+          }
         })
         .catch((err) => {
-          dispatch(onError(err));
           localStorage.removeItem('token');
-          setTimeout(() => {
-            dispatch(offError());
-          }, 10000);
+          errorHandler(err.message);
         });
     } else {
       dispatch(offLoading());
-      navigate('/login');
     }
   }, [localStorage.getItem('token')]);
 
@@ -78,15 +85,27 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route
               path="/movies"
-              element={<ProtectedRoute component={<Movies />} />}
+              element={
+                <ProtectedRoute
+                  component={<Movies errorHandler={errorHandler} />}
+                />
+              }
             />
             <Route
               path="/saved"
-              element={<ProtectedRoute component={<SavedMovies />} />}
+              element={
+                <ProtectedRoute
+                  component={<Movies errorHandler={errorHandler} />}
+                />
+              }
             />
-            <Route 
-              path="/profile" 
-              element={<ProtectedRoute component={<Profile />} />}
+            <Route
+              path="/profile"
+              element={
+                <ProtectedRoute
+                  component={<Profile errorHandler={errorHandler} />}
+                />
+              }
             />
             <Route path="*" element={<PageNotFound />} />
           </Routes>

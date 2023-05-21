@@ -10,7 +10,7 @@ import { mainApi } from 'utils/MainApi';
 import Layout from 'components/Layout/Layout';
 import Field from './components/Field/Field';
 
-const Profile = () => {
+const Profile = ({ errorHandler }) => {
   const user = useSelector((state) => state.user.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -35,18 +35,12 @@ const Profile = () => {
             dispatch(offError());
           }, 10000);
         } else {
-          dispatch(onError('Обновлено'));
-          setTimeout(() => {
-            dispatch(offError());
-          }, 10000);
+          errorHandler('Refreshed');
           dispatch(setUser(res));
         }
       })
       .catch(() => {
-        dispatch(onError('С сервером беда'));
-        setTimeout(() => {
-          dispatch(offError());
-        }, 10000);
+        errorHandler('Server error...');
       });
   }, []);
 
@@ -57,7 +51,10 @@ const Profile = () => {
   }, []);
 
   useEffect(() => {
-    if (inputName !== user.name || inputEmail !== user.email) {
+    if (
+      (inputName !== user.name && inputName !== '') ||
+      (inputEmail !== user.email && inputEmail !== '')
+    ) {
       setEditAvailable(true);
     } else {
       setEditAvailable(false);
@@ -68,6 +65,11 @@ const Profile = () => {
     setInputEmail(user.email);
     setInputName(user.name);
   }, [user]);
+
+  useEffect(() => {
+    errors.name && errorHandler(errors.name.message);
+    errors.email && errorHandler(errors.email.message);
+  }, [errors]);
   return (
     <Layout>
       <div className="profile">
@@ -76,7 +78,6 @@ const Profile = () => {
           <form className="profile__form" onSubmit={handleSubmit(setSubmit)}>
             <Field
               name={'Имя'}
-              // value={inputName}
               border
               register={{
                 ...register('name', {

@@ -6,6 +6,7 @@ import loading from './slices/loadingSlice';
 import movies from './slices/moviesSlice';
 import savedMovies from './slices/savedMoviesSlice';
 import slider from './slices/searchSliderSlice';
+import input from './slices/inputSlice';
 
 export const store = configureStore({
   reducer: {
@@ -16,5 +17,6 @@ export const store = configureStore({
     movies,
     savedMovies,
     slider,
+    input,
   }
 })
