@@ -64,13 +64,20 @@ const Movies = ({ errorHandler }) => {
     if (slider && searchInput !== '') {
       newMovies = filterArray(shorts.current);
       dispatch(setMovies(newMovies));
+      localStorage.setItem('foundMovies', JSON.stringify(newMovies));
     } else if (!slider && searchInput !== '') {
       newMovies = filterArray(longs.current);
       dispatch(setMovies(newMovies));
+      localStorage.setItem('foundMovies', JSON.stringify(newMovies));
     } else {
       dispatch(setMovies([]));
     }
   }, [searchInput, slider]);
+
+  useEffect(() => {
+    const oldSave = JSON.parse(localStorage.getItem('foundMovies'));
+    oldSave !== null && dispatch(setMovies(oldSave));
+  }, []);
 
   return (
     <Layout footer>

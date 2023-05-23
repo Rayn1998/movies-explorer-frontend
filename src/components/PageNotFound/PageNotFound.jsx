@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 const PageNotFound = () => {
   const navigate = useNavigate();
   const handleBackClick = () => {
-    navigate('/');
+    navigate(-1);
   }
   return (
     <div className="page-not-found">

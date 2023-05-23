@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { offError, onError } from 'redux/slices/errorPopupSlice';
-import { setUser } from 'redux/slices/userSlice';
 
 import { useForm } from 'react-hook-form';
 
@@ -15,8 +14,6 @@ import SubmitButton from './components/SubmitButton/SubmitButton';
 import { mainApi } from 'utils/MainApi';
 
 const Register = () => {
-  const user = useSelector((state) => state.user.user);
-
   const {
     register,
     handleSubmit,
@@ -43,18 +40,7 @@ const Register = () => {
           .login(rest)
           .then((res) => {
             localStorage.setItem('token', res.token);
-            mainApi
-              .checkToken(res)
-              .then((res) => {
-                dispatch(setUser(res));
-                navigate('/movies');
-              })
-              .catch((err) => {
-                dispatch(onError(err));
-                setTimeout(() => {
-                  dispatch(offError());
-                }, 10000);
-              });
+            navigate('/movies');
           })
           .catch((err) => {
             dispatch(onError(err));
@@ -76,6 +62,10 @@ const Register = () => {
       ? setIsButtonActive(true)
       : setIsButtonActive(false);
   }, [inputEmail, inputName, inputPassword]);
+
+  useEffect(() => {
+    localStorage.getItem('token') && navigate('/');
+  }, []);
 
   return (
     <AuthBase

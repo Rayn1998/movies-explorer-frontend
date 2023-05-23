@@ -1,19 +1,39 @@
 import { useCallback, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import { useSelector } from 'react-redux';
 
 import SearchSlider from './components/SearchSlider/SearchSlider';
 
 const Search = ({ props }) => {
   const { setSearchInput, errorHandler } = props;
+
+  const slider = useSelector((state) => state.slider.slider);
+
+  const initialField = () => {
+    const data = JSON.parse(localStorage.getItem('searchData'));
+    if (data !== null && data.searchInput) return data.searchInput;
+  }
+
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      search: initialField(),
+    },
+  });
 
   const setSubmit = useCallback((data) => {
+    localStorage.setItem(
+      'searchData',
+      JSON.stringify({
+        searchInput: data.search,
+        slider: slider,
+      })
+    );
     setSearchInput(data.search);
-  }, []);
+  }, [slider]);
 
   useEffect(() => {
     errors.search && errorHandler(errors.search.message);

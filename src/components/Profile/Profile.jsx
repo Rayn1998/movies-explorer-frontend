@@ -18,11 +18,13 @@ const Profile = ({ errorHandler }) => {
   const [inputName, setInputName] = useState('');
   const [inputEmail, setInputEmail] = useState('');
   const [editAvailable, setEditAvailable] = useState(0);
+  const [emailCorrect, setEmailCorrect] = useState(false);
 
   const {
     handleSubmit,
     register,
     formState: { errors },
+    setValue,
   } = useForm();
 
   const setSubmit = useCallback((data) => {
@@ -44,32 +46,54 @@ const Profile = ({ errorHandler }) => {
       });
   }, []);
 
+  useEffect(() => {
+    Object.keys(user).length === 0 &&
+      mainApi
+        .checkToken()
+        .then((res) => {
+          console.log('api user')
+          dispatch(setUser(res));
+          setInputEmail(res.email);
+          setInputName(res.name);
+          setValue('name', res.name);
+          setValue('email', res.email);
+        })
+        .catch((err) => {
+          dispatch(onError(err));
+          setTimeout(() => {
+            dispatch(offError());
+          }, 10000);
+        });
+  }, []);
+
   const handleLogout = useCallback(() => {
     dispatch(setUser({}));
-    localStorage.removeItem('token');
+    localStorage.clear();
     navigate('/login');
   }, []);
 
   useEffect(() => {
+    inputEmail?.match(emailCheck)
+      ? setEmailCorrect(true)
+      : setEmailCorrect(false);
+  }, [inputEmail]);
+
+  useEffect(() => {
     if (
-      (inputName !== user.name && inputName !== '') ||
-      (inputEmail !== user.email && inputEmail !== '')
+      (inputName !== user.name && inputName !== '' && inputName?.length > 2) ||
+      (inputEmail !== user.email && inputEmail !== '' && emailCorrect)
     ) {
       setEditAvailable(true);
     } else {
       setEditAvailable(false);
     }
-  }, [inputName, inputEmail, user]);
-
-  useEffect(() => {
-    setInputEmail(user.email);
-    setInputName(user.name);
-  }, [user]);
+  }, [inputName, inputEmail, user, emailCorrect]);
 
   useEffect(() => {
     errors.name && errorHandler(errors.name.message);
     errors.email && errorHandler(errors.email.message);
   }, [errors]);
+
   return (
     <Layout>
       <div className="profile">
@@ -97,7 +121,7 @@ const Profile = ({ errorHandler }) => {
                 ...register('email', {
                   required: 'Email is required',
                   pattern: {
-                    value: emailCheck,
+                    value: user.email,
                     message: 'Email is incorrect',
                   },
                   value: user.email,

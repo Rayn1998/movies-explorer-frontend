@@ -3,7 +3,6 @@ import AuthField from './components/AuthField/AuthField';
 import SubmitButton from './components/SubmitButton/SubmitButton';
 
 import { useDispatch } from 'react-redux';
-import { setUser } from 'redux/slices/userSlice';
 import { onError, offError } from 'redux/slices/errorPopupSlice';
 
 import { useNavigate } from 'react-router-dom';
@@ -41,19 +40,8 @@ const Login = () => {
             dispatch(offError());
           }, 10000);
         }
+        navigate('/movies');
         localStorage.setItem('token', res.token);
-        mainApi
-          .checkToken(res)
-          .then((res) => {
-            dispatch(setUser(res));
-            navigate('/movies');
-          })
-          .catch((err) => {
-            dispatch(onError(err));
-            setTimeout(() => {
-              dispatch(offError());
-            }, 10000);
-          });
       })
       .catch((err) => {
         dispatch(onError(err));
@@ -61,6 +49,10 @@ const Login = () => {
           dispatch(offError());
         }, 10000);
       });
+  }, []);
+
+  useEffect(() => {
+    localStorage.getItem('token') && navigate('/');
   }, []);
 
   useEffect(() => {

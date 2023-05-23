@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { sliderOn, sliderOff } from "redux/slices/searchSliderSlice";
 
@@ -13,6 +13,15 @@ const SearchSlider = () => {
       dispatch(sliderOn())
     }
   }, [slider]);
+
+  useEffect(() => {
+    const data = JSON.parse(localStorage.getItem('searchData'));
+    if (data !== null && data.slider) {
+      dispatch(sliderOn());
+    } else if (data !== null && !data.slider) {
+      dispatch(sliderOff());
+     } 
+  }, []);
 
   return (
     <div 

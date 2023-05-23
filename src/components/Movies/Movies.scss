@@ -7,6 +7,14 @@
 
   .movies__container {
     @include movieContainer;
+
+  }
+
+  .movies__nothing-found {
+    @include text;
+    font-size: 2.4rem;
+    text-align: center;
+    margin-top: 4rem;
   }
 
   .movies__add-more {

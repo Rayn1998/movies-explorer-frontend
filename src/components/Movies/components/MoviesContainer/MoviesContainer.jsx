@@ -4,13 +4,17 @@ const MoviesContainer = ({ props }) => {
   const { movies, moviesLimiter, handleAddClick } = props;
   return (
     <>
-      <div className="movies__container">
-        {movies?.map((movie, i) => {
-          while (i < moviesLimiter) {
-            return <MovieCard key={movie.id} props={movie} />;
-          }
-        })}
-      </div>
+      {movies.length === 0 ? (
+        <p className="movies__nothing-found">Ничего не найдено....</p>
+      ) : (
+        <div className="movies__container">
+          {movies.map((movie, i) => {
+            while (i < moviesLimiter) {
+              return <MovieCard key={movie.id} props={movie} />;
+            }
+          })}
+        </div>
+      )}
       <div className="movies__add-more">
         <button
           className="movies__add-btn"
