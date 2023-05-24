@@ -34,14 +34,15 @@ const Login = () => {
     mainApi
       .login(data)
       .then((res) => {
-        if (res.message) {
+        if (!res.message) {
+          navigate('/movies');
+          localStorage.setItem('token', res.token);
+        } else {
           dispatch(onError(res.message));
           setTimeout(() => {
             dispatch(offError());
           }, 10000);
         }
-        navigate('/movies');
-        localStorage.setItem('token', res.token);
       })
       .catch((err) => {
         dispatch(onError(err));

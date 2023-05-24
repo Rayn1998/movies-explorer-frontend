@@ -31,23 +31,30 @@ const Register = () => {
   const navigate = useNavigate();
 
   const setSubmit = useCallback((data) => {
-    reset();
     mainApi
       .register(data)
-      .then(() => {
-        const { name, ...rest } = data;
-        mainApi
-          .login(rest)
-          .then((res) => {
-            localStorage.setItem('token', res.token);
-            navigate('/movies');
-          })
-          .catch((err) => {
-            dispatch(onError(err));
-            setTimeout(() => {
-              dispatch(offError());
-            }, 10000);
-          });
+      .then((res) => {
+        if (!res.message) {
+          reset();
+          const { name, ...rest } = data;
+          mainApi
+            .login(rest)
+            .then((res) => {
+              localStorage.setItem('token', res.token);
+              navigate('/movies');
+            })
+            .catch((err) => {
+              dispatch(onError(err));
+              setTimeout(() => {
+                dispatch(offError());
+              }, 10000);
+            });
+        } else {
+          dispatch(onError(res.message));
+          setTimeout(() => {
+            dispatch(offError());
+          }, 10000);
+        }
       })
       .catch((err) => {
         dispatch(onError(err));

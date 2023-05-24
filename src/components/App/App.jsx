@@ -54,7 +54,7 @@ function App() {
     } else {
       dispatch(offLoading());
     }
-  }, [localStorage.getItem('token')]);
+  }, []);
 
   useEffect(() => {
     if (menu) {

@@ -16,6 +16,10 @@ const savedMoviesSlice = createSlice({
     },
     removeSavedMovie(state, { payload }) {
       state.savedMovies = state.savedMovies.filter(movie => movie._id !== payload);
+    },
+    filterSavedMovies(state, { payload }) {
+      const filteredMovies = state.savedMovies.filter(movie => movie.includes(payload));
+      return filteredMovies;
     }
   }
 })
