@@ -43,7 +43,6 @@ const Movies = ({ errorHandler }) => {
               errorHandler(err.message);
             });
         } else {
-          console.log(res);
           errorHandler(res.message);
           return;
         }

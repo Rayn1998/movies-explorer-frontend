@@ -51,7 +51,6 @@ const Search = ({ props }) => {
             slider: slider,
           })
         );
-        console.log('here');
         if (slider && data.search !== '') {
           newMovies = filterArray(shorts.current);
           dispatch(setMovies(newMovies));
@@ -64,13 +63,10 @@ const Search = ({ props }) => {
           dispatch(setMovies([]));
         }
       } else if (location.pathname === '/saved') {
-        console.log('search on saved');
         if (data.search !== '') {
           newMovies = filterArray(savedRef.current);
-          console.log('after filter', newMovies);
           dispatch(setSavedMovies(newMovies));
         } else {
-          console.log(savedRef.current);
           dispatch(setSavedMovies(savedRef.current));
           return;
         }

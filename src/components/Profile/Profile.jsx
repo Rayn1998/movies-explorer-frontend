@@ -51,7 +51,6 @@ const Profile = ({ errorHandler }) => {
       mainApi
         .checkToken()
         .then((res) => {
-          console.log('api user')
           dispatch(setUser(res));
           setInputEmail(res.email);
           setInputName(res.name);

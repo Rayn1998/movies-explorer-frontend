@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react';
+import { useRef } from 'react';
 import { useSelector } from 'react-redux';
 
 import MovieCard from '../MovieCard/MovieCard';
@@ -7,10 +7,6 @@ const SavedMoviesContainer = () => {
   const savedMovies = useSelector((state) => state.savedMovies.savedMovies);
   const savedRef = useRef();
   savedRef.current = savedMovies;
-
-  useEffect(() => {
-    console.log(savedMovies);
-  }, [savedMovies]);
 
   return (
     <>
