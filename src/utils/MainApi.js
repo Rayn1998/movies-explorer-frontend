@@ -108,4 +108,5 @@ class MainApi {
 
 // http://api.bodolanov.diploma.nomoredomains.monster
 // http://localhost:3001
-export const mainApi = new MainApi('http://localhost:3001');
+// export const mainApi = new MainApi('http://localhost:3001');
+export const mainApi = new MainApi('http://192.168.0.201:3001');

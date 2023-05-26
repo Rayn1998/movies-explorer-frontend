@@ -6,7 +6,6 @@ import { addSavedMovie, removeSavedMovie } from 'redux/slices/savedMoviesSlice';
 import { onError, offError } from 'redux/slices/errorPopupSlice';
 
 const MovieButton = ({ props, savedRef }) => {
-  // console.log(savedRef)
   const [isFavourite, setIsFavourite] = useState(false);
   const [savedId, setSavedId] = useState(0);
   const location = useLocation();
@@ -52,7 +51,7 @@ const MovieButton = ({ props, savedRef }) => {
         .removeFavourite(savedId)
         .then(() => {
           const filtered = savedRef.current.filter(movie => movie._id !== savedId);
-          console.log('filtered', filtered);
+          // console.log('filtered', filtered);
           savedRef.current = filtered;
           dispatch(removeSavedMovie(savedId));
           // const localSaved = JSON.parse(localStorage.getItem('saved'));

@@ -40,7 +40,7 @@ const Movies = ({ errorHandler }) => {
       .getMovies()
       .then((res) => {
         if (!res.message) {
-          console.log(res);
+          // console.log(res);
           dispatch(setSavedMovies(res));
           savedRef.current = res;
           localStorage.setItem('saved', JSON.stringify(res));

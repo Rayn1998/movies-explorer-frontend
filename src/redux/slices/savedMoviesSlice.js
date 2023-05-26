@@ -23,13 +23,15 @@ const savedMoviesSlice = createSlice({
         (movie) => movie._id !== payload
       );
     },
-    // filterSavedMovies(state, { payload }) {
-    //   received = state.savedMovies;
-    //   state.savedMovies = state.savedMovies.filter(
-    //     (movie) =>
-    //       movie.nameRU.includes(payload) || movie.nameEN.includes(payload)
-    //   );
-    // },
+    filterSavedMovies(state, { payload }) {
+      if (payload !== '') {
+        received = state.savedMovies;
+        state.savedMovies = state.savedMovies.filter(
+          (movie) => movie.nameRU.includes(payload) || movie.nameEN.includes(payload));
+      } else {
+        state.savedMovies = received;
+      }
+    },
   },
 });
 
