@@ -5,7 +5,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { addSavedMovie, removeSavedMovie } from 'redux/slices/savedMoviesSlice';
 import { onError, offError } from 'redux/slices/errorPopupSlice';
 
-const MovieButton = ({ props, longs }) => {
+const MovieButton = ({ props, savedRef }) => {
+  // console.log(savedRef)
   const [isFavourite, setIsFavourite] = useState(false);
   const [savedId, setSavedId] = useState(0);
   const location = useLocation();
@@ -35,6 +36,7 @@ const MovieButton = ({ props, longs }) => {
             return;
           }
           dispatch(addSavedMovie(res));
+          savedRef.current.push(res);
           const localSaved = JSON.parse(localStorage.getItem('saved'));
           localSaved.push(res);
           localStorage.setItem('saved', JSON.stringify(localSaved));
@@ -49,12 +51,15 @@ const MovieButton = ({ props, longs }) => {
       mainApi
         .removeFavourite(savedId)
         .then(() => {
+          const filtered = savedRef.current.filter(movie => movie._id !== savedId);
+          console.log('filtered', filtered);
+          savedRef.current = filtered;
           dispatch(removeSavedMovie(savedId));
-          const localSaved = JSON.parse(localStorage.getItem('saved'));
-          const newLocalSaved = localSaved.filter(movie => {
-            return movie._id !== savedId;
-          });
-          localStorage.setItem('saved', JSON.stringify(newLocalSaved));
+          // const localSaved = JSON.parse(localStorage.getItem('saved'));
+          // const newLocalSaved = localSaved.filter(movie => {
+          //   return movie._id !== savedId;
+          // });
+          localStorage.setItem('saved', JSON.stringify(filtered));
         })
         .catch((err) => {
           dispatch(onError(err.message));

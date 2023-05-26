@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { useSelector, useDispatch } from 'react-redux';
 import { setMovies } from 'redux/slices/moviesSlice';
@@ -9,11 +9,13 @@ import {
 import SearchSlider from './components/SearchSlider/SearchSlider';
 
 const Search = ({ props }) => {
-  const { errorHandler, longs, shorts } = props;
+  const { errorHandler, longs, shorts, savedRef } = props;
   const [searchInput, setSearchInput] = useState('');
 
   const dispatch = useDispatch();
   const slider = useSelector((state) => state.slider.slider);
+
+  
 
   // Taking search data from storage
   const initialField = () => {
@@ -43,15 +45,16 @@ const Search = ({ props }) => {
 
   // Search function
   const search = useCallback((search) => {
+    const saved = JSON.parse(localStorage.getItem('saved'));
+    console.log(shorts, longs, saved);
     if (search.search !== '') {
-      const saved = JSON.parse(localStorage.getItem('saved'));
       let newMovies = [];
       let newShortMovies = [];
       let newSavedMovies = [];
       let newShortsSavedMovies = [];
       newMovies = filterArray(longs.current, search);
       newShortMovies = filterArray(shorts.current, search);
-      newSavedMovies = filterArray(saved, search);
+      newSavedMovies = filterArray(savedRef.current, search);
       newShortsSavedMovies = newSavedMovies.filter((movie) => movie.duration <= 40);
       if (slider) {
         dispatch(setMovies(newShortMovies));
@@ -65,7 +68,7 @@ const Search = ({ props }) => {
       localStorage.setItem('saved', JSON.stringify(newSavedMovies));
       localStorage.setItem('shortsSaved', JSON.stringify(newShortsSavedMovies));
     }
-  }, [slider]);
+  }, [slider, savedRef, longs, shorts]);
 
   // Submit Function
   const setSubmit = useCallback(
@@ -86,10 +89,15 @@ const Search = ({ props }) => {
   // Return the saved movies when the search input is empty
   useEffect(() => {
     if (searchInput === '') {
-      const localSaved = JSON.parse(localStorage.getItem('saved'));
-      localSaved && dispatch(setSavedMovies(localSaved));
+      // const localSaved = JSON.parse(localStorage.getItem('saved'));
+      // localSaved && dispatch(setSavedMovies(localSaved));
+      if (savedRef.current?.length > 0) {
+        console.log(savedRef.current);
+        dispatch(setSavedMovies(savedRef.current));
+        localStorage.setItem('saved', JSON.stringify(savedRef.current));
+      } 
     }
-  }, [searchInput, localStorage.getItem('saved')]);
+  }, [searchInput, savedRef.current]);
 
   // Filter the short movies
   useEffect(() => {
@@ -100,6 +108,10 @@ const Search = ({ props }) => {
       if (shortMovies && shortSaved) {
         dispatch(setMovies(shortMovies));
         dispatch(setSavedMovies(shortSaved));
+      } else {
+        const saved = JSON.parse(localStorage.getItem('saved'));
+        const newSavedShorts = saved.filter(movie => movie.duration <= 40);
+        dispatch(setSavedMovies(newSavedShorts));
       }
     } else {
       const movies = JSON.parse(localStorage.getItem('movies'));
@@ -107,6 +119,8 @@ const Search = ({ props }) => {
       if (movies && savedMovies) {
         dispatch(setMovies(movies.movies));
         dispatch(setSavedMovies(savedMovies));
+      } else if (savedMovies) {
+        dispatch(setSavedMovies(savedRef.current));
       }
     }
   }, [slider]);

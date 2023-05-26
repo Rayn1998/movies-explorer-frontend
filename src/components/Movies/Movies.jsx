@@ -22,6 +22,7 @@ const Movies = ({ errorHandler }) => {
 
   const longs = useRef();
   const shorts = useRef();
+  const savedRef = useRef();
 
   const setShorts = useCallback((arr) => {
     shorts.current = arr.filter((movie) => movie.duration <= 40);
@@ -39,7 +40,9 @@ const Movies = ({ errorHandler }) => {
       .getMovies()
       .then((res) => {
         if (!res.message) {
+          console.log(res);
           dispatch(setSavedMovies(res));
+          savedRef.current = res;
           localStorage.setItem('saved', JSON.stringify(res));
           
           // Получаю фильмы с bitfilms;
@@ -70,12 +73,13 @@ const Movies = ({ errorHandler }) => {
             errorHandler,
             longs,
             shorts,
+            savedRef,
           }}
         />
         {location.pathname === '/movies' ? (
-          <MoviesContainer props={{ moviesLimiter, handleAddClick, longs }} />
+          <MoviesContainer props={{ moviesLimiter, handleAddClick, longs, savedRef }} />
         ) : (
-          location.pathname === '/saved' && <SavedMoviesContainer />
+          location.pathname === '/saved' && <SavedMoviesContainer savedRef={savedRef} />
         )}
       </div>
     </Layout>
