@@ -19,6 +19,7 @@
     padding: 0 1.8rem;
     box-sizing: border-box;
     width: 100%;
+    max-height: 1.8rem;
     justify-content: space-between;
 
     .movie-card__title {
@@ -26,7 +27,7 @@
       font-size: 1.5rem;
       line-height: 1.8rem;
       color: $white;
-      max-width: 100%;
+      max-width: 19rem;
       height: 1.8rem;
       overflow: hidden;
       white-space: nowrap;
@@ -42,9 +43,7 @@
       font-size: 1.3rem;
       line-height: 1.8rem;
       color: $grey-text;
-      width: 10rem;
       text-align: end;
-      // justify-self: flex-end;
 
       @media screen and (max-width: 600px) {
         font-size: 1rem;

@@ -11,8 +11,8 @@ const moviesSlice = createSlice({
     setMovies(state, { payload }) {
       state.movies = [...payload];
     },
-  }
-})
+  },
+});
 
 export const { setMovies } = moviesSlice.actions;
 export default moviesSlice.reducer;

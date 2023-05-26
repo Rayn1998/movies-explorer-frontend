@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { addSavedMovie, removeSavedMovie } from 'redux/slices/savedMoviesSlice';
 import { onError, offError } from 'redux/slices/errorPopupSlice';
 
-const MovieButton = ({ props }) => {
+const MovieButton = ({ props, longs }) => {
   const [isFavourite, setIsFavourite] = useState(false);
   const [savedId, setSavedId] = useState(0);
   const location = useLocation();
@@ -17,11 +17,13 @@ const MovieButton = ({ props }) => {
     if (!isFavourite && location.pathname !== '/saved') {
       const { image } = props;
       const { id, created_at, updated_at, ...rest } = props;
+
       const data = Object.assign({}, rest, {
         image: image.url,
         thumbnail: image.url,
-        movieId: props.id,
+        id: props.id,
       });
+
       mainApi
         .addFavourite(data)
         .then((res) => {
@@ -33,6 +35,9 @@ const MovieButton = ({ props }) => {
             return;
           }
           dispatch(addSavedMovie(res));
+          const localSaved = JSON.parse(localStorage.getItem('saved'));
+          localSaved.push(res);
+          localStorage.setItem('saved', JSON.stringify(localSaved));
         })
         .catch((err) => {
           dispatch(onError(err.message));
@@ -45,6 +50,11 @@ const MovieButton = ({ props }) => {
         .removeFavourite(savedId)
         .then(() => {
           dispatch(removeSavedMovie(savedId));
+          const localSaved = JSON.parse(localStorage.getItem('saved'));
+          const newLocalSaved = localSaved.filter(movie => {
+            return movie._id !== savedId;
+          });
+          localStorage.setItem('saved', JSON.stringify(newLocalSaved));
         })
         .catch((err) => {
           dispatch(onError(err.message));
@@ -67,19 +77,17 @@ const MovieButton = ({ props }) => {
     return <div className="movie-button-del"></div>;
   };
 
+  // Change the status of a button
   useEffect(() => {
-    const state = savedMovies.find(
-      (movie) =>
-        movie.movieId ===
-        (location.pathname === '/saved' ? props.movieId : props.id)
-    );
+    const localSaved = JSON.parse(localStorage.getItem('saved'));
+    const state = localSaved.find((movie) => movie.id === props.id);
     if (state) {
       setIsFavourite(true);
       setSavedId(state._id);
     } else {
       setIsFavourite(false);
     }
-  }, [savedMovies]);
+  }, [savedMovies, props]);
 
   return (
     <button

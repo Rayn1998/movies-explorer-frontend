@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useSelector, useDispatch } from 'react-redux';
 import { setUser } from 'redux/slices/userSlice';
+import { setMovies } from 'redux/slices/moviesSlice';
+import { setSavedMovies } from 'redux/slices/savedMoviesSlice';
 import { onError, offError } from 'redux/slices/errorPopupSlice';
 
 import { emailCheck } from 'utils/regExpressions';
@@ -67,6 +69,8 @@ const Profile = ({ errorHandler }) => {
 
   const handleLogout = useCallback(() => {
     dispatch(setUser({}));
+    dispatch(setMovies([]));
+    dispatch(setSavedMovies([]));
     localStorage.clear();
     navigate('/login');
   }, []);

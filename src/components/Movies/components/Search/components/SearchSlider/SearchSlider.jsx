@@ -10,7 +10,7 @@ const SearchSlider = () => {
     if (slider) {
       dispatch(sliderOff());
     } else {
-      dispatch(sliderOn())
+      dispatch(sliderOn());
     }
   }, [slider]);
 
