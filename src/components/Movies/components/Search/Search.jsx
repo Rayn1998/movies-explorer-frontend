@@ -1,21 +1,23 @@
-import { useCallback, useEffect, useState, useRef } from 'react';
+import { useCallback, useEffect } from 'react';
+
 import { useForm } from 'react-hook-form';
+
 import { useSelector, useDispatch } from 'react-redux';
 import { setMovies } from 'redux/slices/moviesSlice';
-import {
-  filterSavedMovies,
-  setSavedMovies,
-} from 'redux/slices/savedMoviesSlice';
+import { setInput } from 'redux/slices/inputSlice';
+import { setSavedMovies } from 'redux/slices/savedMoviesSlice';
 
+import { moviesApi } from 'utils/MoviesApi';
 import SearchSlider from './components/SearchSlider/SearchSlider';
 
 const Search = ({ props }) => {
   const { errorHandler, longs, shorts, savedRef } = props;
-  const [searchInput, setSearchInput] = useState('');
 
   const dispatch = useDispatch();
+
+  // Слайсы
+  const input = useSelector((state) => state.input.input);
   const slider = useSelector((state) => state.slider.slider);
-  const saved = useSelector((state) => state.savedMovies.savedMovies);
 
   // Taking search data from storage
   const initialField = () => {
@@ -34,51 +36,25 @@ const Search = ({ props }) => {
     },
   });
 
-  const filterArray = (arr, search) => {
+  const filterArray = (arr) => {
     return arr.filter((item) => {
       return (
-        item.nameRU.toLowerCase().includes(search.search.toLowerCase()) ||
-        item.nameEN.toLowerCase().includes(search.search.toLowerCase())
+        item.nameRU.toLowerCase().includes(input.toLowerCase()) ||
+        item.nameEN.toLowerCase().includes(input.toLowerCase())
       );
     });
   };
 
+  const filterArrayShort = (arr) => {
+    return arr?.filter((item) => {
+      return item.duration <= 40;
+    });
+  };
+
   // Search function
-  const search = useCallback(
-    (search) => {
-      const saved = JSON.parse(localStorage.getItem('saved'));
-      // console.log(shorts, longs, saved);
-      if (search.search !== '') {
-        let newMovies = [];
-        let newShortMovies = [];
-        let newSavedMovies = [];
-        let newShortsSavedMovies = [];
-        newMovies = filterArray(longs.current, search);
-        newShortMovies = filterArray(shorts.current, search);
-        // newSavedMovies = filterArray(savedRef.current, search);
-        dispatch(filterSavedMovies(search.search));
-        newShortsSavedMovies = saved.filter(
-          (movie) => movie.duration <= 40
-        );
-        if (slider) {
-          dispatch(setMovies(newShortMovies));
-          dispatch(setSavedMovies(newShortsSavedMovies));
-        } else {
-          dispatch(filterSavedMovies(''));
-          dispatch(setMovies(newMovies));
-          dispatch(setSavedMovies(newSavedMovies));
-        }
-        localStorage.setItem('movies', JSON.stringify({ movies: newMovies }));
-        localStorage.setItem('shorts', JSON.stringify(newShortMovies));
-        // localStorage.setItem('saved', JSON.stringify(newSavedMovies));
-        localStorage.setItem(
-          'shortsSaved',
-          JSON.stringify(newShortsSavedMovies)
-        );
-      }
-    },
-    [slider, savedRef, longs, shorts]
-  );
+  // const search = useCallback(() => {
+  //   // localStorage.setItem('originMovies', JSON.stringify(res));
+  // }, [input]);
 
   // Submit Function
   const setSubmit = useCallback(
@@ -91,62 +67,49 @@ const Search = ({ props }) => {
         })
       );
 
-      search(data);
+      // Получаю фильмы с bitfilms;
+      moviesApi
+        .getMovies()
+        .then((res) => {
+          const filtered = filterArray(res);
+          dispatch(setMovies(filtered));
+          localStorage.setItem('filteredMovies', JSON.stringify(filtered));
+        })
+        .catch((err) => {
+          errorHandler(err.message);
+          return;
+        });
     },
     [slider]
   );
 
   // Return the saved movies when the search input is empty
   useEffect(() => {
-    if (searchInput === '') {
-      const localSaved = JSON.parse(localStorage.getItem('saved'));
-      localSaved && dispatch(setSavedMovies(localSaved));
-      // if (savedRef.current?.length > 0) {
-      // console.log(savedRef.current);
-      // dispatch(setSavedMovies(savedRef.current));
-      // localStorage.setItem('saved', JSON.stringify(savedRef.current));
+    if (input === '') {
     }
-  }, [searchInput]);
+  }, []);
 
   // Filter the short movies
-  useEffect(() => {
-    if (slider) {
-      if (searchInput === '') {
-        // console.log('here')
-        // console.log(searchInput)
-        // console.log(savedRef.current)
-        const shortsFilter = saved.filter((movie) => movie.duration <= 40);
-        // console.log(shortsFilter);
-        dispatch(setSavedMovies(shortsFilter));
-        return;
-      }
-      const shortMovies = JSON.parse(localStorage.getItem('shorts'));
-      const shortSaved = JSON.parse(localStorage.getItem('shortsSaved'));
-
-      if (shortMovies && shortSaved) {
-        dispatch(setMovies(shortMovies));
-        dispatch(setSavedMovies(shortSaved));
-      } else {
-        const saved = JSON.parse(localStorage.getItem('saved'));
-        const newSavedShorts = saved.filter((movie) => movie.duration <= 40);
-        dispatch(setSavedMovies(newSavedShorts));
-      }
-    } else {
-      const movies = JSON.parse(localStorage.getItem('movies'));
-      const savedMovies = JSON.parse(localStorage.getItem('saved'));
-      if (movies && savedMovies) {
-        dispatch(setMovies(movies.movies));
-        dispatch(setSavedMovies(savedMovies));
-      } else if (savedMovies) {
-        dispatch(setSavedMovies(savedRef.current));
-      }
-    }
-  }, [slider, searchInput]);
+  useEffect(() => {}, [slider]);
 
   // Show the errors
   useEffect(() => {
     errors.search && errorHandler(errors.search.message);
   }, [errors.search]);
+
+  useEffect(() => {
+    localStorage.setItem(
+      'searchData',
+      JSON.stringify({ searchInput: '', slider: slider })
+    );
+  }, []);
+
+
+
+  useEffect(() => {
+    console.log(input);
+  }, [input]);
+
 
   return (
     <div className="search">
@@ -159,7 +122,7 @@ const Search = ({ props }) => {
             className="search__input"
             {...register('search', {
               required: 'Enter some data for searching...',
-              onChange: (e) => setSearchInput(e.target.value),
+              onChange: (e) => dispatch(setInput(e.target.value)),
             })}
             style={{
               outline: errors.search?.message ? '0.1rem solid red' : '',

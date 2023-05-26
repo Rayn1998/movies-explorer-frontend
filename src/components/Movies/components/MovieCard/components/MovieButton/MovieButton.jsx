@@ -5,15 +5,17 @@ import { useSelector, useDispatch } from 'react-redux';
 import { addSavedMovie, removeSavedMovie } from 'redux/slices/savedMoviesSlice';
 import { onError, offError } from 'redux/slices/errorPopupSlice';
 
-const MovieButton = ({ props, savedRef }) => {
+const MovieButton = ({ props }) => {
   const [isFavourite, setIsFavourite] = useState(false);
   const [savedId, setSavedId] = useState(0);
   const location = useLocation();
 
   const dispatch = useDispatch();
+  const movies = useSelector((state) => state.movies.movies);
   const savedMovies = useSelector((state) => state.savedMovies.savedMovies);
 
   const handleClick = () => {
+    const inputSavedFilms = JSON.parse(localStorage.getItem('inputSavedFilms'));
     if (!isFavourite && location.pathname !== '/saved') {
       const { image } = props;
       const { id, created_at, updated_at, ...rest } = props;
@@ -23,7 +25,6 @@ const MovieButton = ({ props, savedRef }) => {
         thumbnail: image.url,
         id: props.id,
       });
-
       mainApi
         .addFavourite(data)
         .then((res) => {
@@ -35,10 +36,8 @@ const MovieButton = ({ props, savedRef }) => {
             return;
           }
           dispatch(addSavedMovie(res));
-          savedRef.current.push(res);
-          const localSaved = JSON.parse(localStorage.getItem('saved'));
-          localSaved.push(res);
-          localStorage.setItem('saved', JSON.stringify(localSaved));
+          inputSavedFilms.push(res);
+          localStorage.setItem('inputSavedFilms', JSON.stringify(inputSavedFilms));
         })
         .catch((err) => {
           dispatch(onError(err.message));
@@ -50,15 +49,9 @@ const MovieButton = ({ props, savedRef }) => {
       mainApi
         .removeFavourite(savedId)
         .then(() => {
-          const filtered = savedRef.current.filter(movie => movie._id !== savedId);
-          // console.log('filtered', filtered);
-          savedRef.current = filtered;
           dispatch(removeSavedMovie(savedId));
-          // const localSaved = JSON.parse(localStorage.getItem('saved'));
-          // const newLocalSaved = localSaved.filter(movie => {
-          //   return movie._id !== savedId;
-          // });
-          localStorage.setItem('saved', JSON.stringify(filtered));
+          const filteredInput = inputSavedFilms.filter(movie => movie._id !== savedId);
+          localStorage.setItem('inputSavedFilms', JSON.stringify(filteredInput));
         })
         .catch((err) => {
           dispatch(onError(err.message));
@@ -83,15 +76,14 @@ const MovieButton = ({ props, savedRef }) => {
 
   // Change the status of a button
   useEffect(() => {
-    const localSaved = JSON.parse(localStorage.getItem('saved'));
-    const state = localSaved.find((movie) => movie.id === props.id);
+    const state = movies.find((movie) => movie.id === props.id);
     if (state) {
       setIsFavourite(true);
       setSavedId(state._id);
     } else {
       setIsFavourite(false);
     }
-  }, [savedMovies, props]);
+  }, [localStorage.getItem('inputSavedFilms'), props]);
 
   return (
     <button

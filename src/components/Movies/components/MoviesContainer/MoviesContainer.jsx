@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import MovieCard from '../MovieCard/MovieCard';
 
 const MoviesContainer = ({ props }) => {
-  const { moviesLimiter, handleAddClick, savedRef } = props;
+  const { moviesLimiter, handleAddClick } = props;
 
   const movies = useSelector(state => state.movies.movies);
   return (
@@ -14,7 +14,7 @@ const MoviesContainer = ({ props }) => {
         <div className="movies__container">
           {movies.map((movie, i) => {
             while (i < moviesLimiter) {
-              return <MovieCard key={movie.id} props={movie} savedRef={savedRef} />;
+              return <MovieCard key={movie.id} props={movie} />;
             }
           })}
         </div>

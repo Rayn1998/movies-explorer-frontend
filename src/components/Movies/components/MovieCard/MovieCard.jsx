@@ -2,7 +2,7 @@ import { useLocation } from 'react-router-dom';
 
 import MovieButton from './components/MovieButton/MovieButton';
 
-const MovieCard = ({ props, savedRef }) => {
+const MovieCard = ({ props }) => {
   const { nameRU, duration, image, trailerLink } = props;
   const location = useLocation();
   const { url, name: imageName } = image;
@@ -28,7 +28,7 @@ const MovieCard = ({ props, savedRef }) => {
           alt={imageName}
         />
       </a>
-      <MovieButton props={props} savedRef={savedRef} />
+      <MovieButton props={props} />
     </div>
   );
 };

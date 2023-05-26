@@ -5,11 +5,10 @@ import SavedMoviesContainer from './components/SavedMoviesContainer/SavedMoviesC
 
 import { useDispatch } from 'react-redux';
 import { setSavedMovies } from 'redux/slices/savedMoviesSlice';
-import { useEffect, useState, useCallback, useRef } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
 import { moviesApi } from 'utils/MoviesApi';
 import { mainApi } from 'utils/MainApi';
-import { setMovies } from 'redux/slices/moviesSlice';
 
 const Movies = ({ errorHandler }) => {
   const dispatch = useDispatch();
@@ -20,41 +19,15 @@ const Movies = ({ errorHandler }) => {
     setMoviesLimiter((moviesLimiter) => moviesLimiter + 3);
   }, []);
 
-  const longs = useRef();
-  const shorts = useRef();
-  const savedRef = useRef();
-
-  const setShorts = useCallback((arr) => {
-    shorts.current = arr.filter((movie) => movie.duration <= 40);
-  }, []);
-
   // При загрузке
   useEffect(() => {
-    const savedData = JSON.parse(localStorage.getItem('movies'));
-    if (savedData !== null) {
-      dispatch(setMovies(savedData.movies));
-    }
-
     // Получаю сохраненные фильмы
     mainApi
       .getMovies()
       .then((res) => {
         if (!res.message) {
-          // console.log(res);
           dispatch(setSavedMovies(res));
-          savedRef.current = res;
-          localStorage.setItem('saved', JSON.stringify(res));
-          
-          // Получаю фильмы с bitfilms;
-          moviesApi
-            .getMovies()
-            .then((res) => {
-              longs.current = res;
-              setShorts(res);
-            })
-            .catch((err) => {
-              errorHandler(err.message);
-            });
+          localStorage.setItem('originSavedMovies', JSON.stringify(res));
         } else {
           errorHandler(res.message);
           return;
@@ -71,15 +44,12 @@ const Movies = ({ errorHandler }) => {
         <Search
           props={{
             errorHandler,
-            longs,
-            shorts,
-            savedRef,
           }}
         />
         {location.pathname === '/movies' ? (
-          <MoviesContainer props={{ moviesLimiter, handleAddClick, longs, savedRef }} />
+          <MoviesContainer props={{ moviesLimiter, handleAddClick }} />
         ) : (
-          location.pathname === '/saved' && <SavedMoviesContainer savedRef={savedRef} />
+          location.pathname === '/saved' && <SavedMoviesContainer />
         )}
       </div>
     </Layout>

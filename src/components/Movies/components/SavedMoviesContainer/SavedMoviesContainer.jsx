@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux';
 
 import MovieCard from '../MovieCard/MovieCard';
 
-const SavedMoviesContainer = ({ savedRef }) => {
+const SavedMoviesContainer = () => {
   const savedMovies = useSelector((state) => state.savedMovies.savedMovies);
   return (
     <>
@@ -11,7 +11,7 @@ const SavedMoviesContainer = ({ savedRef }) => {
       ) : (
         <div className="saved-movies">
           {savedMovies.map((movie) => {
-            return <MovieCard key={movie.id} props={movie} savedRef={savedRef} />;
+            return <MovieCard key={movie.id} props={movie} />;
           })}
         </div>
       )}
