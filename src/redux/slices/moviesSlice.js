@@ -9,7 +9,9 @@ const moviesSlice = createSlice({
   initialState,
   reducers: {
     setMovies(state, { payload }) {
-      state.movies = [...payload];
+      if (payload !== undefined && payload !== null) {
+        state.movies = [...payload];
+      }
     },
   },
 });

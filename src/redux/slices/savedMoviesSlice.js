@@ -9,7 +9,7 @@ const savedMoviesSlice = createSlice({
   initialState,
   reducers: {
     setSavedMovies(state, { payload }) {
-      if (payload !== undefined) {
+      if (payload !== undefined && payload !== null) {
         state.savedMovies = [...payload];
       }
     },

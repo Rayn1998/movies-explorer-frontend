@@ -2,6 +2,7 @@ import { useCallback, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useSelector, useDispatch } from 'react-redux';
+import { setInput } from 'redux/slices/inputSlice';
 import { setUser } from 'redux/slices/userSlice';
 import { setMovies } from 'redux/slices/moviesSlice';
 import { setSavedMovies } from 'redux/slices/savedMoviesSlice';
@@ -13,6 +14,7 @@ import Layout from 'components/Layout/Layout';
 import Field from './components/Field/Field';
 
 const Profile = ({ errorHandler }) => {
+
   const user = useSelector((state) => state.user.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -71,6 +73,7 @@ const Profile = ({ errorHandler }) => {
     dispatch(setUser({}));
     dispatch(setMovies([]));
     dispatch(setSavedMovies([]));
+    dispatch(setInput(''));
     localStorage.clear();
     navigate('/login');
   }, []);

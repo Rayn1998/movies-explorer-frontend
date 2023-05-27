@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import RegularMenu from './RegularMenu/RegularMenu';
 import MainMenu from './MainMenu/MainMenu';
@@ -7,10 +7,8 @@ import { onMenu } from 'redux/slices/menuSlice';
 
 const Navigation = () => {
   const menu = useSelector((state) => state.menu.open);
-  const user = useSelector((state) => state.user.user);
   const dispatch = useDispatch();
   const navigation = useNavigate();
-  const location = useLocation();
   const [changeMenu, setChangeMenu] = useState(false);
   const handleRegisterClick = () => {
     navigation('/register');
@@ -32,8 +30,8 @@ const Navigation = () => {
   };
   // If need to highlight active element - set the path value to object
   const menuItems = [
-    { name: 'Фильмы', handleClick: handleMoviesClick },
-    { name: 'Сохранённые фильмы', handleClick: handleSavedMoviesClick },
+    { name: 'Фильмы', handleClick: handleMoviesClick, path: '/movies' },
+    { name: 'Сохранённые фильмы', handleClick: handleSavedMoviesClick, path: '/saved' },
   ];
 
   useEffect(() => {

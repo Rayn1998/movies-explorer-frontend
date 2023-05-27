@@ -1,4 +1,3 @@
-import { useCallback } from 'react';
 import AuthHeader from '../AuthHeader/AuthHeader';
 import { useNavigate } from 'react-router-dom';
 

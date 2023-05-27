@@ -11,20 +11,25 @@ const MovieButton = ({ props }) => {
   const location = useLocation();
 
   const dispatch = useDispatch();
-  const movies = useSelector((state) => state.movies.movies);
   const savedMovies = useSelector((state) => state.savedMovies.savedMovies);
 
+  // ПРИ КЛИКЕ
+  //////////////////////////////////////////////////////////////////////////////
   const handleClick = () => {
-    const inputSavedFilms = JSON.parse(localStorage.getItem('inputSavedFilms'));
+    const originSavedMovies = JSON.parse(localStorage.getItem('originSavedMovies'));
+    const filteredSavedMovies = JSON.parse(localStorage.getItem('filteredSavedMovies'));
+
+    // Проеверяю текущее состояние
     if (!isFavourite && location.pathname !== '/saved') {
-      const { image } = props;
-      const { id, created_at, updated_at, ...rest } = props;
+      const { image, id, created_at, updated_at, ...rest } = props;
 
       const data = Object.assign({}, rest, {
         image: image.url,
         thumbnail: image.url,
         id: props.id,
       });
+
+      // Отправляю запросы на добавление/удаление
       mainApi
         .addFavourite(data)
         .then((res) => {
@@ -36,8 +41,10 @@ const MovieButton = ({ props }) => {
             return;
           }
           dispatch(addSavedMovie(res));
-          inputSavedFilms.push(res);
-          localStorage.setItem('inputSavedFilms', JSON.stringify(inputSavedFilms));
+          originSavedMovies.push(res);
+          filteredSavedMovies.push(res);
+          localStorage.setItem('originSavedMovies', JSON.stringify(originSavedMovies));
+          localStorage.setItem('filteredSavedMovies', JSON.stringify(filteredSavedMovies));
         })
         .catch((err) => {
           dispatch(onError(err.message));
@@ -50,8 +57,10 @@ const MovieButton = ({ props }) => {
         .removeFavourite(savedId)
         .then(() => {
           dispatch(removeSavedMovie(savedId));
-          const filteredInput = inputSavedFilms.filter(movie => movie._id !== savedId);
-          localStorage.setItem('inputSavedFilms', JSON.stringify(filteredInput));
+          const filteredInput = originSavedMovies.filter(movie => movie._id !== savedId);
+          const filteredSaved = filteredSavedMovies.filter(movie => movie._id !== savedId);
+          localStorage.setItem('originSavedMovies', JSON.stringify(filteredInput));
+          localStorage.setItem('filteredSavedMovies', JSON.stringify(filteredSavedMovies));
         })
         .catch((err) => {
           dispatch(onError(err.message));
@@ -62,6 +71,23 @@ const MovieButton = ({ props }) => {
     }
   };
 
+  // Меняю состояние кнопки
+  //////////////////////////////////////////////////////////////////////////////
+  useEffect(() => {
+    const state = savedMovies.find((movie) => movie.id === props.id);
+    if (state) {
+      setIsFavourite(true);
+      setSavedId(state._id);
+    } else {
+      setIsFavourite(false);
+    }
+  }, [props, savedMovies]);
+  //////////////////////////////////////////////////////////////////////////////
+
+
+
+
+  //////////////////////////////////////////////////////////////////////////////
   const search = () => {
     return isFavourite ? (
       <div className="movie-button-checked" />
@@ -73,18 +99,8 @@ const MovieButton = ({ props }) => {
   const saved = () => {
     return <div className="movie-button-del"></div>;
   };
-
-  // Change the status of a button
-  useEffect(() => {
-    const state = movies.find((movie) => movie.id === props.id);
-    if (state) {
-      setIsFavourite(true);
-      setSavedId(state._id);
-    } else {
-      setIsFavourite(false);
-    }
-  }, [localStorage.getItem('inputSavedFilms'), props]);
-
+  //////////////////////////////////////////////////////////////////////////////
+  
   return (
     <button
       className="movie-button"

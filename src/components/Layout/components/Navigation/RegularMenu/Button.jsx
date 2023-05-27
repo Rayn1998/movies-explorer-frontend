@@ -4,12 +4,14 @@ import { offMenu } from "redux/slices/menuSlice";
 
 const Button = ({ props }) => {
   const { handleClick: click, name, path } = props;
+
   const location = useLocation();
   const dispatch = useDispatch();
   const handleClick = () => {
     click();
     dispatch(offMenu());
   }
+
   return (
     <button 
       className="nav-button" 

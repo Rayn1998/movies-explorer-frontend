@@ -10,9 +10,9 @@ import { setSavedMovies } from 'redux/slices/savedMoviesSlice';
 import { moviesApi } from 'utils/MoviesApi';
 import SearchSlider from './components/SearchSlider/SearchSlider';
 
-const Search = ({ props }) => {
-  const { errorHandler, longs, shorts, savedRef } = props;
+import { filterArrayShort } from 'utils/functions';
 
+const Search = ({ errorHandler }) => {
   const dispatch = useDispatch();
 
   // Слайсы
@@ -45,17 +45,6 @@ const Search = ({ props }) => {
     });
   };
 
-  const filterArrayShort = (arr) => {
-    return arr?.filter((item) => {
-      return item.duration <= 40;
-    });
-  };
-
-  // Search function
-  // const search = useCallback(() => {
-  //   // localStorage.setItem('originMovies', JSON.stringify(res));
-  // }, [input]);
-
   // Submit Function
   const setSubmit = useCallback(
     (data) => {
@@ -71,8 +60,23 @@ const Search = ({ props }) => {
       moviesApi
         .getMovies()
         .then((res) => {
+          const originSavedMovies = JSON.parse(
+            localStorage.getItem('originSavedMovies')
+          );
           const filtered = filterArray(res);
-          dispatch(setMovies(filtered));
+          const filteredSaved = filterArray(originSavedMovies);
+          const filteredShorts = filterArrayShort(filtered);
+          const filteredSavedShorts = filterArrayShort(filteredSaved);
+          if (slider) {
+            dispatch(setMovies(filteredShorts));
+            dispatch(setSavedMovies(filteredSavedShorts));
+          } else {
+            dispatch(setMovies(filtered));
+            dispatch(setSavedMovies(filteredSaved));
+          }
+          // Решил еще одну переменную в хранилище создать
+          localStorage.setItem('filteredSavedMovies', JSON.stringify(filteredSaved));
+          //
           localStorage.setItem('filteredMovies', JSON.stringify(filtered));
         })
         .catch((err) => {
@@ -80,36 +84,40 @@ const Search = ({ props }) => {
           return;
         });
     },
-    [slider]
+    [slider, filterArray]
   );
 
   // Return the saved movies when the search input is empty
   useEffect(() => {
+    const originSavedMovies = JSON.parse(
+      localStorage.getItem('originSavedMovies')
+    );
+    const filteredSavedMovies = JSON.parse(
+      localStorage.getItem('filteredSavedMovies')
+    );
+    // console.log(input);
     if (input === '') {
+      if (slider) {
+        const shorts = filterArrayShort(originSavedMovies);
+        dispatch(setSavedMovies(shorts));
+      } else {
+        dispatch(setSavedMovies(originSavedMovies));
+      }
+    } else {
+      if (slider) {
+        const shorts = filterArrayShort(filteredSavedMovies);
+        dispatch(setSavedMovies(shorts));
+      } else {
+        dispatch(setSavedMovies(filteredSavedMovies));
+      }
     }
-  }, []);
+  }, [input]);
 
-  // Filter the short movies
-  useEffect(() => {}, [slider]);
 
   // Show the errors
   useEffect(() => {
     errors.search && errorHandler(errors.search.message);
   }, [errors.search]);
-
-  useEffect(() => {
-    localStorage.setItem(
-      'searchData',
-      JSON.stringify({ searchInput: '', slider: slider })
-    );
-  }, []);
-
-
-
-  useEffect(() => {
-    console.log(input);
-  }, [input]);
-
 
   return (
     <div className="search">
@@ -122,6 +130,7 @@ const Search = ({ props }) => {
             className="search__input"
             {...register('search', {
               required: 'Enter some data for searching...',
+              value: input,
               onChange: (e) => dispatch(setInput(e.target.value)),
             })}
             style={{
@@ -132,7 +141,7 @@ const Search = ({ props }) => {
         </form>
         <div className="search__slider-wrapper">
           <p className="search__slider-title">Короткометражки</p>
-          <SearchSlider />
+          <SearchSlider filterArray={filterArray} />
         </div>
       </div>
       <div className="search__divider"></div>
