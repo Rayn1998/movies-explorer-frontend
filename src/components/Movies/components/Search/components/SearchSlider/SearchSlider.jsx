@@ -14,10 +14,12 @@ const SearchSlider = ({ filterArray }) => {
   const dispatch = useDispatch();
 
   const handleClick = useCallback(() => {
+    // Получаю данные из хранилища
     const filteredMovies = JSON.parse(localStorage.getItem('filteredMovies'));
     const originSavedMovies = JSON.parse(localStorage.getItem('originSavedMovies'));
     const filteredSavedMovies = JSON.parse(localStorage.getItem('filteredSavedMovies'));
     const searchData = JSON.parse(localStorage.getItem('searchData'));
+
     if (slider) {
       dispatch(setMovies(filteredMovies));
       dispatch(sliderOff());
@@ -65,7 +67,7 @@ const SearchSlider = ({ filterArray }) => {
       localStorage.setItem('searchData', JSON.stringify(searchData));
 
     }
-  }, [slider, dispatch, filterArray]);
+  }, [slider, dispatch, filterArray, input]);
 
   return (
     <div 

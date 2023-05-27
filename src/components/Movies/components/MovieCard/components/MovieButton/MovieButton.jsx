@@ -60,7 +60,7 @@ const MovieButton = ({ props }) => {
           const filteredInput = originSavedMovies.filter(movie => movie._id !== savedId);
           const filteredSaved = filteredSavedMovies.filter(movie => movie._id !== savedId);
           localStorage.setItem('originSavedMovies', JSON.stringify(filteredInput));
-          localStorage.setItem('filteredSavedMovies', JSON.stringify(filteredSavedMovies));
+          localStorage.setItem('filteredSavedMovies', JSON.stringify(filteredSaved));
         })
         .catch((err) => {
           dispatch(onError(err.message));
@@ -84,10 +84,6 @@ const MovieButton = ({ props }) => {
   }, [props, savedMovies]);
   //////////////////////////////////////////////////////////////////////////////
 
-
-
-
-  //////////////////////////////////////////////////////////////////////////////
   const search = () => {
     return isFavourite ? (
       <div className="movie-button-checked" />
@@ -99,7 +95,6 @@ const MovieButton = ({ props }) => {
   const saved = () => {
     return <div className="movie-button-del"></div>;
   };
-  //////////////////////////////////////////////////////////////////////////////
   
   return (
     <button

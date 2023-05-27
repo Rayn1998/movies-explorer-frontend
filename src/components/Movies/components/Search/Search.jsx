@@ -3,6 +3,7 @@ import { useCallback, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { useSelector, useDispatch } from 'react-redux';
+import { onLoading, offLoading } from 'redux/slices/loadingSlice';
 import { setMovies } from 'redux/slices/moviesSlice';
 import { setInput } from 'redux/slices/inputSlice';
 import { setSavedMovies } from 'redux/slices/savedMoviesSlice';
@@ -46,46 +47,46 @@ const Search = ({ errorHandler }) => {
   };
 
   // Submit Function
-  const setSubmit = useCallback(
-    (data) => {
-      localStorage.setItem(
-        'searchData',
-        JSON.stringify({
-          searchInput: data.search,
-          slider: slider,
-        })
-      );
+  const setSubmit = useCallback((data) => {
+    localStorage.setItem(
+      'searchData',
+      JSON.stringify({
+        searchInput: data.search,
+        slider,
+      })
+    );
+    dispatch(onLoading());
 
-      // Получаю фильмы с bitfilms;
-      moviesApi
-        .getMovies()
-        .then((res) => {
-          const originSavedMovies = JSON.parse(
-            localStorage.getItem('originSavedMovies')
-          );
-          const filtered = filterArray(res);
-          const filteredSaved = filterArray(originSavedMovies);
-          const filteredShorts = filterArrayShort(filtered);
-          const filteredSavedShorts = filterArrayShort(filteredSaved);
-          if (slider) {
-            dispatch(setMovies(filteredShorts));
-            dispatch(setSavedMovies(filteredSavedShorts));
-          } else {
-            dispatch(setMovies(filtered));
-            dispatch(setSavedMovies(filteredSaved));
-          }
-          // Решил еще одну переменную в хранилище создать
-          localStorage.setItem('filteredSavedMovies', JSON.stringify(filteredSaved));
-          //
-          localStorage.setItem('filteredMovies', JSON.stringify(filtered));
-        })
-        .catch((err) => {
-          errorHandler(err.message);
-          return;
-        });
-    },
-    [slider, filterArray]
-  );
+    // Получаю фильмы с bitfilms;
+    moviesApi
+      .getMovies()
+      .then((res) => {
+        const originSavedMovies = JSON.parse(
+          localStorage.getItem('originSavedMovies')
+        );
+        const filtered = filterArray(res);
+        const filteredSaved = filterArray(originSavedMovies);
+        const filteredShorts = filterArrayShort(filtered);
+        const filteredSavedShorts = filterArrayShort(filteredSaved);
+        if (slider) {
+          dispatch(setMovies(filteredShorts));
+          dispatch(setSavedMovies(filteredSavedShorts));
+        } else {
+          dispatch(setMovies(filtered));
+          dispatch(setSavedMovies(filteredSaved));
+        }
+        // Решил еще одну переменную в хранилище создать
+        localStorage.setItem('filteredSavedMovies', JSON.stringify(filteredSaved));
+        //
+        localStorage.setItem('filteredMovies', JSON.stringify(filtered));
+        dispatch(offLoading());
+      })
+      .catch((err) => {
+        dispatch(offLoading());
+        errorHandler(err.message);
+        return;
+      });
+    }, [slider, filterArray]);
 
   // Return the saved movies when the search input is empty
   useEffect(() => {
@@ -95,19 +96,22 @@ const Search = ({ errorHandler }) => {
     const filteredSavedMovies = JSON.parse(
       localStorage.getItem('filteredSavedMovies')
     );
-    // console.log(input);
     if (input === '') {
       if (slider) {
+        console.log('1');
         const shorts = filterArrayShort(originSavedMovies);
         dispatch(setSavedMovies(shorts));
       } else {
+        console.log('2');
         dispatch(setSavedMovies(originSavedMovies));
       }
     } else {
       if (slider) {
+        console.log('3');
         const shorts = filterArrayShort(filteredSavedMovies);
         dispatch(setSavedMovies(shorts));
       } else {
+        console.log('4');
         dispatch(setSavedMovies(filteredSavedMovies));
       }
     }

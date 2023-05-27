@@ -5,6 +5,7 @@ import SavedMoviesContainer from './components/SavedMoviesContainer/SavedMoviesC
 
 import { useDispatch, useSelector } from 'react-redux';
 import { setMovies } from 'redux/slices/moviesSlice';
+import { setInput } from 'redux/slices/inputSlice';
 import { setSavedMovies } from 'redux/slices/savedMoviesSlice';
 import { sliderOn, sliderOff } from "redux/slices/searchSliderSlice";
 
@@ -20,26 +21,54 @@ const Movies = ({ errorHandler }) => {
 
   const dispatch = useDispatch();
   const location = useLocation();
+  const [limitSize, setLimitSize] = useState(3)
   const [moviesLimiter, setMoviesLimiter] = useState(12);
 
   const handleAddClick = useCallback(() => {
-    setMoviesLimiter((moviesLimiter) => moviesLimiter + 3);
+    setMoviesLimiter((moviesLimiter) => moviesLimiter + limitSize);
+  }, [limitSize]);
+
+  const checkWidth = () => {
+    setTimeout(() => {
+      if (window.innerWidth <= 990) {
+        setLimitSize(2);
+      } else {
+        setLimitSize(3);
+      }
+    }, 3000)
+  }
+
+  useEffect(() => {
+    window.addEventListener('resize', checkWidth);
+    return () => {
+      window.removeEventListener('resize', checkWidth);
+    }
   }, []);
+
 
   // ТОЛЬКО ПРИ ЗАГРУЗКЕ
   /////////////////////////////////////////////////////////////////////////////
   useEffect(() => {
-    const data = JSON.parse(localStorage.getItem('searchData'));
+    if (window.innerWidth <= 990) {
+      setLimitSize(2);
+    } else {
+      setLimitSize(3);
+    }
+    const searchData = JSON.parse(localStorage.getItem('searchData'));
     const originSavedMovies = JSON.parse(localStorage.getItem('originSavedMovies'));
     const filteredSavedMovies = JSON.parse(localStorage.getItem('filteredSavedMovies'));
     const filteredMovies = JSON.parse(localStorage.getItem('filteredMovies'));
 
     // Устанавливаю сохранённое значение слайдера
-    if (data !== null && data.slider) {
+    if (searchData !== null && searchData.slider) {
       dispatch(sliderOn());
-    } else if (data !== null && !data.slider) {
+    } else if (searchData !== null && !searchData.slider) {
       dispatch(sliderOff());
-    } else {
+    }
+    
+    if (searchData !== null && searchData.searchInput !== '') {
+      dispatch(setInput(searchData.searchInput));
+    } else if (searchData === null || searchData === undefined) {
       localStorage.setItem('searchData', JSON.stringify({
           searchInput: '',
           slider: false,
@@ -48,38 +77,34 @@ const Movies = ({ errorHandler }) => {
     }
     // Получаю сохраненные фильмы, если они не были сохранены
     if (filteredSavedMovies !== null) {
-      if (slider) {
-        const filtered = filterArrayShort(filteredSavedMovies);
-        dispatch(setSavedMovies(filtered));
-      } else {
-        dispatch(setSavedMovies(filteredSavedMovies));
-      }
-      return;
-    }
-    if (originSavedMovies !== null && originSavedMovies.length > 0) {
-      dispatch(setSavedMovies(originSavedMovies));
-      return;
+      const filtered = filterArrayShort(filteredSavedMovies);
+      slider && dispatch(setSavedMovies(filtered));
     } else {
-      mainApi
-        .getMovies()
-        .then((res) => {
-          if (!res.message) {
-            if (slider) {
-              const shorts = filterArrayShort(res);
-              dispatch(setSavedMovies(shorts));
+      if (originSavedMovies !== null && originSavedMovies.length > 0) {
+        dispatch(setSavedMovies(originSavedMovies));
+      } else {
+        mainApi
+          .getMovies()
+          .then((res) => {
+            if (!res.message) {
+              if (slider) {
+                const shorts = filterArrayShort(res);
+                dispatch(setSavedMovies(shorts));
+              } else {
+                dispatch(setSavedMovies(res));
+              }
+              localStorage.setItem('originSavedMovies', JSON.stringify(res));
             } else {
-              dispatch(setSavedMovies(res));
+              errorHandler(res.message);
+              return;
             }
-            localStorage.setItem('originSavedMovies', JSON.stringify(res));
-          } else {
-            errorHandler(res.message);
-            return;
-          }
-        })
-        .catch((err) => {
-          errorHandler(err.message);
-        });
+          })
+          .catch((err) => {
+            errorHandler(err.message);
+          });
+      }
     }
+
 
     // Получаю отфильтрованные фильмы, если они не были сохранены
     if (filteredMovies !== null && filteredMovies.length > 0) {

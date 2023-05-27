@@ -7,14 +7,15 @@ import { setUser } from 'redux/slices/userSlice';
 import { setMovies } from 'redux/slices/moviesSlice';
 import { setSavedMovies } from 'redux/slices/savedMoviesSlice';
 import { onError, offError } from 'redux/slices/errorPopupSlice';
+import { onLoading, offLoading } from 'redux/slices/loadingSlice';
 
 import { emailCheck } from 'utils/regExpressions';
+
 import { mainApi } from 'utils/MainApi';
 import Layout from 'components/Layout/Layout';
 import Field from './components/Field/Field';
 
 const Profile = ({ errorHandler }) => {
-
   const user = useSelector((state) => state.user.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -32,6 +33,7 @@ const Profile = ({ errorHandler }) => {
   } = useForm();
 
   const setSubmit = useCallback((data) => {
+    dispatch(onLoading());
     mainApi
       .updateUser(data)
       .then((res) => {
@@ -44,17 +46,21 @@ const Profile = ({ errorHandler }) => {
           errorHandler('Refreshed');
           dispatch(setUser(res));
         }
+        dispatch(offLoading());
       })
       .catch(() => {
+        dispatch(offLoading());
         errorHandler('Server error...');
       });
   }, []);
 
   useEffect(() => {
-    Object.keys(user).length === 0 &&
+    if (Object.keys(user).length === 0) {
+      dispatch(onLoading());
       mainApi
         .checkToken()
         .then((res) => {
+          dispatch(offLoading());
           dispatch(setUser(res));
           setInputEmail(res.email);
           setInputName(res.name);
@@ -62,11 +68,13 @@ const Profile = ({ errorHandler }) => {
           setValue('email', res.email);
         })
         .catch((err) => {
+          dispatch(offLoading());
           dispatch(onError(err));
           setTimeout(() => {
             dispatch(offError());
           }, 10000);
         });
+    }
   }, []);
 
   const handleLogout = useCallback(() => {
@@ -75,7 +83,7 @@ const Profile = ({ errorHandler }) => {
     dispatch(setSavedMovies([]));
     dispatch(setInput(''));
     localStorage.clear();
-    navigate('/login');
+    navigate('/');
   }, []);
 
   useEffect(() => {
