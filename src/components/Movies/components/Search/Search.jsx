@@ -98,20 +98,16 @@ const Search = ({ errorHandler }) => {
     );
     if (input === '') {
       if (slider) {
-        console.log('1');
         const shorts = filterArrayShort(originSavedMovies);
         dispatch(setSavedMovies(shorts));
       } else {
-        console.log('2');
         dispatch(setSavedMovies(originSavedMovies));
       }
     } else {
       if (slider) {
-        console.log('3');
         const shorts = filterArrayShort(filteredSavedMovies);
         dispatch(setSavedMovies(shorts));
       } else {
-        console.log('4');
         dispatch(setSavedMovies(filteredSavedMovies));
       }
     }

@@ -1,5 +1,59 @@
-{data: {…}}
-data: 
-  email: "4test4@mail.ru"
-  name: "name"
-  _id: "6464c46036ce0c001a416929"
+  GNU nano 4.8                                                             /etc/nginx/sites-available/default
+server {
+        server_name api.bodolanov.diploma.nomoredomains.monster;
+
+          location / {
+                proxy_pass http://localhost:3001;
+                proxy_http_version 1.1;
+                proxy_set_header Upgrade $http_upgrade;
+                proxy_set_header Connection 'upgrade';
+                proxy_set_header Host $host;
+                proxy_cache_bypass $http_upgrade;
+  }
+
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/bodolanov.diploma.nomoredomains.monster/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/bodolanov.diploma.nomoredomains.monster/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+}
+
+
+server {
+        server_name bodolanov.diploma.nomoredomains.monster;
+        root /home/bodolanov/app/movies-explorer-frontend/build;
+        try_files $uri /index.html;
+
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/bodolanov.diploma.nomoredomains.monster/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/bodolanov.diploma.nomoredomains.monster/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+}
+
+
+server {
+    if ($host = bodolanov.diploma.nomoredomains.monster) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+        listen 80;
+        server_name bodolanov.diploma.nomoredomains.monster;
+    return 404; # managed by Certbot
+
+
+}server {
+    if ($host = api.bodolanov.diploma.nomoredomains.monster) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+        listen 80;
+        server_name api.bodolanov.diploma.nomoredomains.monster;
+    return 404; # managed by Certbot
+
+
+}
