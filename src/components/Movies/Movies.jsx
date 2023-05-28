@@ -15,36 +15,20 @@ import { mainApi } from 'utils/MainApi';
 
 import { filterArrayShort } from 'utils/functions';
 
-const Movies = ({ errorHandler }) => {
+const Movies = ({ errorHandler, props }) => {
+
+  const { limitSize, setLimitSize } = props;
 
   const slider = useSelector(state => state.slider.slider);
 
   const dispatch = useDispatch();
   const location = useLocation();
-  const [limitSize, setLimitSize] = useState(3)
+  
   const [moviesLimiter, setMoviesLimiter] = useState(12);
 
   const handleAddClick = useCallback(() => {
     setMoviesLimiter((moviesLimiter) => moviesLimiter + limitSize);
   }, [limitSize]);
-
-  const checkWidth = () => {
-    setTimeout(() => {
-      if (window.innerWidth <= 990) {
-        setLimitSize(2);
-      } else {
-        setLimitSize(3);
-      }
-    }, 3000)
-  }
-
-  useEffect(() => {
-    window.addEventListener('resize', checkWidth);
-    return () => {
-      window.removeEventListener('resize', checkWidth);
-    }
-  }, []);
-
 
   // ТОЛЬКО ПРИ ЗАГРУЗКЕ
   /////////////////////////////////////////////////////////////////////////////

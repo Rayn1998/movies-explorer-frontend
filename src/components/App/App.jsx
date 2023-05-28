@@ -1,9 +1,11 @@
+import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { onLoading, offLoading } from 'redux/slices/loadingSlice';
 
 import { useCallback, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { setUser } from 'redux/slices/userSlice';
+import { offMenu } from 'redux/slices/menuSlice';
 import { onError, offError } from 'redux/slices/errorPopupSlice';
 
 import ProtectedRoute from 'components/ProtectedRoute/ProtectedRoute';
@@ -23,6 +25,8 @@ function App() {
   const menu = useSelector((state) => state.menu.open);
   const loading = useSelector((state) => state.loading.loading);
   const dispatch = useDispatch();
+
+  const [limitSize, setLimitSize] = useState(3);
 
   const errorHandler = useCallback((err) => {
     dispatch(onError(err));
@@ -53,6 +57,24 @@ function App() {
         });
     } else {
       dispatch(offLoading());
+    }
+  }, []);
+
+  const checkWidth = () => {
+    setTimeout(() => {
+      if (window.innerWidth <= 990) {
+        setLimitSize(2);
+      } else {
+        dispatch(offMenu());
+        setLimitSize(3);
+      }
+    }, 3000)
+  }
+
+  useEffect(() => {
+    window.addEventListener('resize', checkWidth);
+    return () => {
+      window.removeEventListener('resize', checkWidth);
     }
   }, []);
 
@@ -87,7 +109,9 @@ function App() {
               path="/movies"
               element={
                 <ProtectedRoute
-                  component={<Movies errorHandler={errorHandler} />}
+                  component={<Movies errorHandler={errorHandler} props={{
+                    limitSize, setLimitSize
+                  }} />}
                 />
               }
             />
@@ -95,7 +119,9 @@ function App() {
               path="/saved"
               element={
                 <ProtectedRoute
-                  component={<Movies errorHandler={errorHandler} />}
+                  component={<Movies errorHandler={errorHandler} props={{
+                    limitSize, setLimitSize
+                  }} />}
                 />
               }
             />
