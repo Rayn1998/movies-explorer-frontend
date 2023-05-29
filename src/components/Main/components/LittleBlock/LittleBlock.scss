@@ -1,0 +1,26 @@
+@use '../../../../scss' as *;
+
+.little-block {
+  @include flexColCen;
+  width: 9rem;
+  height: 6rem;
+  background-color: $light-grey;
+  border-radius: 1rem;
+
+  @media screen and (max-width: 768px) {
+    width: 8.4rem;
+    height: 5.7rem;
+  }
+
+  .little-block__text {
+    @include text;
+    font-size: 1.4rem;
+    line-height: 1.7rem;
+
+    @media screen and (max-width: 768px) {
+      font-size: 1.2rem;
+      line-height: 1.5rem;
+      letter-spacing: -0.04em;
+    }
+  }
+}

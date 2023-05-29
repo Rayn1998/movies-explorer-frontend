@@ -1,0 +1,36 @@
+@use '../../../../../../scss/variables' as *;
+
+@mixin icon {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.movie-button {
+  width: 10rem;
+  height: 2.9rem;
+  border-radius: 3rem;
+  @include flexColCen;
+  border: none;
+  cursor: pointer;
+
+  .movie-button-checked {
+    width: 0.8rem;
+    height: 0.45rem;
+    background-image: url('../../../../../../assets/images/icon__COLOR_checked.png');
+    @include icon;
+  }
+
+  .movie-button-text {
+    @include text;
+    font-size: 1.2rem;
+    line-height: 1.1rem;
+  }
+
+  .movie-button-del {
+    background-image: url('../../../../../../assets/images/icon__COLOR_del.png');
+    @include icon;
+    width: 0.684rem;
+    height: 0.672rem;
+  }
+}

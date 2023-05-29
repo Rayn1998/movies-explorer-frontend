@@ -1,0 +1,31 @@
+@use '../../scss/variables' as *;
+
+.page-not-found {
+  margin: 0 auto;
+  padding: 24.6rem 0 6rem;
+  @include flexColCen;
+  gap: 0.5rem;
+
+  .page-not-found__number {
+    @include text;
+    font-size: 14rem;
+    line-height: 16.9rem;
+    color: $white;
+  }
+
+  .page-not-found__text {
+    @include text;
+    font-size: 1.6rem;
+    line-height: 1.9rem;
+    $color: white;
+  }
+
+  .page-not-found__back {
+    margin-top: 17.9rem;
+    @include text;
+    font-size: 1.4rem;
+    line-height: 1.7rem;
+    color: $blue;
+    cursor: pointer;
+  }
+}

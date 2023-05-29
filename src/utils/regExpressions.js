@@ -1,0 +1,1 @@
+export const emailCheck = /^[a-z\.?0-9]{1}[a-z-\.?0-9]{2,}@[a-z]{2,}\.[a-z]{2,3}$/;

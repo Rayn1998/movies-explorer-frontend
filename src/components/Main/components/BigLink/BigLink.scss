@@ -1,0 +1,51 @@
+@use '../../../../scss' as *;
+
+.big-link {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+
+  @media screen and (max-width: 400px) {
+    max-height: 2.8rem;
+  }
+
+  .big-link__text {
+    @include text;
+    font-size: 3rem;
+    line-height: 5rem;
+    letter-spacing: -0.04em;
+
+    @media screen and (max-width: 768px) {
+      font-size: 2.8rem;
+    }
+
+    @media screen and (max-width: 400px) {
+      font-size: 1.8rem;
+      line-height: 2.8rem;
+    }
+  }
+
+  .big-link__arrow {
+    background-image: url('../../../../assets/images/about-me__arrow.svg');
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 2.6rem;
+    height: 3rem;
+    
+    @media screen and (max-width: 768px) {
+      width: 2.2rem;
+      height: 3rem;
+    }
+
+    @media screen and (max-width: 400px) {
+      width: 1.4rem;
+      height: 2.8rem;
+    }
+  }
+}
+
+.about-me__border {
+  @include linkBorder;
+}

@@ -1,0 +1,74 @@
+@use '../../scss/variables' as *;
+
+.profile {
+  @include flexColCen;
+  @include centerContainer;
+  box-sizing: border-box;
+  max-width: 41rem;
+  min-height: 70rem;
+  padding: 7.4rem 3rem;
+  margin: 0 auto;
+  gap: 12.3rem;
+
+  .profile__head-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 8rem;
+    width: 100%;
+
+    .profile__title {
+      @include text;
+      font-size: 2.4rem;
+      line-height: 2.9rem;
+      color: $white;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    .profile__form {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 1.7rem;
+    }
+  }
+
+  .profile__buttons {
+    width: 100%;
+    margin-top: 9.7rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.6rem;
+
+    .profile__edit-btn {
+      @include text;
+      font-size: 1.3rem;
+      line-height: 1.6rem;
+      color: $white;
+      cursor: pointer;
+      position: relative;
+      background-color: transparent;
+      border: none;
+
+      @include underlineAnim;
+      &::before {
+        background-color: $white;
+      }
+    }
+
+    .profile__exit-btn {
+      @include text;
+      font-size: 1.3rem;
+      line-height: 1.6rem;
+      color: $red;
+      border-radius: 1rem;
+      transition: all 0.2s ease-in-out;
+      cursor: pointer;
+      position: relative;
+
+      @include underlineAnim;
+    }
+  }
+}

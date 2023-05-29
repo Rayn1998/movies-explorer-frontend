@@ -1,0 +1,90 @@
+$promo-bg: #073042;
+$white: #ffffff;
+$white-half-opaque: rgba(255, 255, 255, 0.5);
+$black: #202020;
+$grey: #dadada;
+$light-grey: #303030;
+$green: #3ddc84;
+$grey-text: #8b8b8b;
+$grey-bg: #272727;
+$grey-border: #424242;
+$input-outline: #aaaaaa;
+$input-outline-02opaque: rgba(170, 170, 170, 0.2);
+$card-bg: #222222;
+$btn-bg: #2f2f2f;
+$red: #ee3465;
+$red-error: rgba(211, 0, 0, 0.75);
+$blue: #4285f4;
+
+@mixin text {
+  font-family: 'Inter' 'Arial' sans-serif;
+  font-style: normal;
+  font-weight: 400;
+}
+
+@mixin flexColCen {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin pagePadding {
+  padding: 11rem 7rem;
+  box-sizing: border-box;
+}
+
+@mixin centerContainer {
+  margin: 0 auto;
+  max-width: 128rem;
+}
+
+@mixin movieContainer {
+  padding: 7rem;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  row-gap: 2.8rem;
+  column-gap: 3.2rem;
+
+  @media screen and (max-width: 990px) {
+    padding: 7rem 3rem;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media screen and (max-width: 600px) {
+    padding: 4rem 1rem;
+    grid-template-columns: 1fr;
+    justify-items: center;
+  }
+}
+
+@mixin linkBorder {
+  height: 0.1rem;
+  width: 100%;
+  background-color: $grey-border;
+}
+
+@mixin buttonText {
+  font-weight: 500;
+  font-size: 1.2rem;
+  line-height: 1.6rem;
+}
+
+@mixin underlineAnim {
+  &::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 0.1rem;
+    background-color: $red;
+    transform: translateX(-50%);
+    transition: width 0.3s ease-in-out;
+  }
+
+  &:hover::before {
+    width: 100%;
+  }
+}

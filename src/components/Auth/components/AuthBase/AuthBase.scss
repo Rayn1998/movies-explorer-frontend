@@ -1,0 +1,67 @@
+@use '../../../../scss/variables' as *;
+
+.auth {
+  margin: 0 auto;
+  padding: 7rem 0;
+  max-width: 39.6rem;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 17.9rem;
+
+  @media screen and (max-width: 450px) {
+    justify-content: space-between;
+    height: 100vh;
+    padding: 5.6rem 3rem;
+    gap: 0;
+  }
+
+  .auth__form-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+
+    .auth__form {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+  }
+
+  .auth__footer-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1.6rem;
+
+    .auth__footer-block {
+      display: flex;
+      justify-content: center;
+      gap: 0.6rem;
+
+      .auth__footer-question {
+        @include text;
+        font-size: 1.4rem;
+        line-height: 1.7rem;
+        color: $grey-text;
+
+        @media screen and (max-width: 450px) {
+          font-size: 1.2rem;
+          line-height: 1.5rem;
+        }
+      }
+
+      .auth__footer-btn {
+        @include text;
+        font-size: 1.4rem;
+        line-height: 1.7rem;
+        color: $blue;
+        cursor: pointer;
+
+        @media screen and (max-width: 450px) {
+          font-size: 1.2rem;
+          line-height: 1.5rem;
+        }
+      }
+    }
+  }
+}

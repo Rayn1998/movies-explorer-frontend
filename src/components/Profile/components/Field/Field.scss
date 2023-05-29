@@ -1,0 +1,42 @@
+@use '../../../../scss/variables' as *;
+
+.field {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+  
+  .field__content {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    
+    .field__name {
+      @include text;
+      font-weight: 500;
+      font-size: 1.1rem;
+      line-height: 1.3rem;
+      min-width: 4rem;
+    }
+  
+    .field__value {
+      @include text;
+      font-weight: 400;
+      font-size: 1.1rem;
+      line-height: 1.3rem;
+      width: 100%;
+      height: 1.4rem;
+      background-color: transparent;
+      border: none;
+      text-align: end;
+
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+
+  .field__border {
+    @include linkBorder;
+  }
+}
